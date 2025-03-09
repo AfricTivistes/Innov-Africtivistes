@@ -1,0 +1,797 @@
+---
+// InteractiveMap.astro
+import Badge from "./ui/badge.astro";
+import Button from "./ui/button.astro";
+import Card from "./ui/card.astro";
+import Tabs from "./ui/tabs.astro";
+
+// Définition des types
+interface Project {
+  id: number;
+  title: string;
+  country: string;
+  category: string;
+  impact: string;
+  participants: number;
+  date: string;
+  description: string;
+  coordinates: {
+    x: number;
+    y: number;
+  };
+  color: string;
+  status: "En cours" | "Terminé" | "En préparation";
+  url?: string;
+}
+
+// Données des projets
+const projects: Project[] = [
+  {
+    id: 1,
+    title: "Civic Tech Sénégal",
+    country: "Sénégal",
+    category: "Technologie Civique",
+    impact: "15 communes, 50,000 citoyens",
+    participants: 120,
+    date: "Mars 2025",
+    description:
+      "Plateforme de participation citoyenne pour améliorer la transparence gouvernementale à Dakar et renforcer l'engagement des citoyens dans les processus décisionnels locaux.",
+    coordinates: { x: 25, y: 40 },
+    color: "primary",
+    status: "En cours",
+    url: "#",
+  },
+  {
+    id: 2,
+    title: "Digital Democracy Ghana",
+    country: "Ghana",
+    category: "Démocratie",
+    impact: "3 régions, 120,000 électeurs",
+    participants: 85,
+    date: "Février 2025",
+    description:
+      "Initiative pour renforcer les processus électoraux transparents grâce aux technologies numériques et former les observateurs électoraux aux outils de vérification.",
+    coordinates: { x: 30, y: 45 },
+    color: "accent",
+    status: "En préparation",
+  },
+  {
+    id: 3,
+    title: "Kenya Open Data",
+    country: "Kenya",
+    category: "Données Ouvertes",
+    impact: "National, 5 ministères",
+    participants: 150,
+    date: "Avril 2025",
+    description:
+      "Projet visant à rendre les données gouvernementales accessibles et utilisables par tous les citoyens, avec des formations pour les journalistes et activistes sur l'analyse de données.",
+    coordinates: { x: 55, y: 50 },
+    color: "secondary",
+    status: "En cours",
+    url: "#",
+  },
+  {
+    id: 4,
+    title: "Nigeria Youth Governance",
+    country: "Nigeria",
+    category: "Engagement Jeunesse",
+    impact: "12 états, 250,000 jeunes",
+    participants: 200,
+    date: "Janvier 2025",
+    description:
+      "Programme d'engagement des jeunes dans les processus de gouvernance locale et nationale, avec des formations au leadership et à la participation politique.",
+    coordinates: { x: 35, y: 45 },
+    color: "success",
+    status: "En cours",
+    url: "#",
+  },
+  {
+    id: 5,
+    title: "Maroc Transparent",
+    country: "Maroc",
+    category: "Transparence",
+    impact: "8 villes, 30 institutions",
+    participants: 95,
+    date: "Mai 2025",
+    description:
+      "Initiative pour promouvoir la transparence dans l'administration publique et lutter contre la corruption à travers des outils numériques de suivi budgétaire et de signalement.",
+    coordinates: { x: 20, y: 25 },
+    color: "warning",
+    status: "Terminé",
+    url: "#",
+  },
+  {
+    id: 6,
+    title: "Tunisie Citoyenne",
+    country: "Tunisie",
+    category: "Participation Citoyenne",
+    impact: "15 municipalités, 80,000 citoyens",
+    participants: 110,
+    date: "Juin 2025",
+    description:
+      "Plateforme numérique permettant aux citoyens de participer aux décisions municipales et de suivre l'exécution des projets publics dans leur communauté.",
+    coordinates: { x: 25, y: 20 },
+    color: "info",
+    status: "En préparation",
+  },
+  {
+    id: 7,
+    title: "RDC Media Watch",
+    country: "République Démocratique du Congo",
+    category: "Média",
+    impact: "5 provinces, 20 médias",
+    participants: 75,
+    date: "Juillet 2025",
+    description:
+      "Réseau de surveillance des médias pour lutter contre la désinformation et promouvoir un journalisme éthique et factuel pendant les périodes électorales.",
+    coordinates: { x: 45, y: 45 },
+    color: "primary",
+    status: "En cours",
+  },
+  {
+    id: 8,
+    title: "Éthiopie Dialogue",
+    country: "Éthiopie",
+    category: "Résolution de Conflits",
+    impact: "3 régions en conflit",
+    participants: 120,
+    date: "Août 2025",
+    description:
+      "Plateforme numérique facilitant le dialogue entre communautés et la résolution pacifique des conflits à travers des médiations assistées par la technologie.",
+    coordinates: { x: 50, y: 40 },
+    color: "accent",
+    status: "En cours",
+    url: "#",
+  },
+];
+
+// Variables de types de projet (commentées pour éviter les warnings d'inutilisation)
+// const categories = [
+//   "Toutes les catégories",
+//   "Technologie Civique",
+//   "Démocratie",
+//   "Données Ouvertes",
+//   "Engagement Jeunesse",
+//   "Transparence",
+//   "Participation Citoyenne",
+//   "Média",
+//   "Résolution de Conflits",
+// ];
+// 
+// const statuses = ["Tous les statuts", "En cours", "Terminé", "En préparation"];
+// const regions = [
+//   "Toutes les régions",
+//   "Afrique de l'Ouest",
+//   "Afrique de l'Est",
+//   "Afrique du Nord",
+//   "Afrique Centrale",
+//   "Afrique Australe",
+// ];
+
+// Statistiques par région
+const projectsByRegion = {
+  "Afrique de l'Ouest": projects.filter(p => ["Sénégal", "Ghana", "Nigeria"].includes(p.country)).length,
+  "Afrique du Nord": projects.filter(p => ["Maroc", "Tunisie"].includes(p.country)).length,
+  "Afrique de l'Est": projects.filter(p => ["Kenya", "Éthiopie"].includes(p.country)).length,
+  "Afrique Centrale": projects.filter(p => ["République Démocratique du Congo"].includes(p.country)).length,
+  "Afrique Australe": 0,
+};
+---
+
+<section class="py-8 md:py-16">
+  <div class="container px-4 md:px-6">
+    <div class="text-center mb-8">
+      <Badge class="bg-primary/10 text-primary mb-2">Cartographie</Badge>
+      <h2 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        Carte des Innovations Africaines
+      </h2>
+      <p class="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto mt-2">
+        Explorez la carte interactive pour découvrir des projets innovants qui transforment la démocratie et la
+        gouvernance à travers l'Afrique
+      </p>
+    </div>
+
+    <!-- Contenu principal - Desktop -->
+    <div class="hidden md:grid md:grid-cols-3 gap-6">
+      <div class="md:col-span-2 relative bg-white rounded-xl shadow-lg overflow-hidden h-[500px]">
+        <div class="absolute inset-0 bg-gray-100">
+          <!-- Carte de l'Afrique avec régions colorées -->
+          <div class="relative w-full h-full">
+            <img
+              src="/placeholder.svg?height=500&width=800"
+              alt="Carte de l'Afrique"
+              class="w-full h-full object-cover"
+            />
+
+            <!-- Marqueurs de projets -->
+            {projects.map((project) => (
+              <button
+                data-id={project.id}
+                class={`map-pin absolute w-8 h-8 rounded-full bg-${project.color} text-white flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-transform duration-200 shadow-lg`}
+                style={`left: ${project.coordinates.x}%; top: ${project.coordinates.y}%;`}
+                aria-label={`Voir le projet ${project.title}`}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <!-- Légende de la carte -->
+        <div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-md">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs">
+            {Object.entries(projectsByRegion).map(([region, count]) => (
+              <div class="flex items-center gap-1">
+                <div
+                  class={`w-3 h-3 rounded-full ${
+                    region === "Afrique de l'Ouest"
+                      ? "bg-primary"
+                      : region === "Afrique du Nord"
+                        ? "bg-warning"
+                        : region === "Afrique de l'Est"
+                          ? "bg-secondary"
+                          : region === "Afrique Centrale"
+                            ? "bg-accent"
+                            : "bg-success"
+                  }`}
+                ></div>
+                <span>
+                  {region}: <strong>{count}</strong>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <!-- Conteneur pour les détails du projet sélectionné -->
+        <div id="project-details" class="project-details hidden">
+          <!-- Les détails du projet seront injectés ici par le JavaScript -->
+        </div>
+
+        <!-- Statistiques des projets -->
+        <div id="projects-stats" class="projects-stats">
+          <Card>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-4">Projets innovants</h3>
+              <p class="text-muted-foreground mb-4">
+                Cliquez sur les marqueurs de la carte pour découvrir des projets innovants qui transforment la
+                démocratie et la gouvernance en Afrique.
+              </p>
+
+              <div class="grid grid-cols-2 gap-2 text-center">
+                <div class="bg-primary/10 p-3 rounded-lg">
+                  <div class="text-2xl font-bold text-primary">{projects.length}</div>
+                  <div class="text-xs text-muted-foreground">Projets totaux</div>
+                </div>
+                <div class="bg-success/10 p-3 rounded-lg">
+                  <div class="text-2xl font-bold text-success">
+                    {projects.filter((p) => p.status === "En cours").length}
+                  </div>
+                  <div class="text-xs text-muted-foreground">Projets actifs</div>
+                </div>
+                <div class="bg-secondary/10 p-3 rounded-lg">
+                  <div class="text-2xl font-bold text-secondary">
+                    {projects.filter((p) => p.status === "Terminé").length}
+                  </div>
+                  <div class="text-xs text-muted-foreground">Projets terminés</div>
+                </div>
+                <div class="bg-accent/10 p-3 rounded-lg">
+                  <div class="text-2xl font-bold text-accent">
+                    {projects.filter((p) => p.status === "En préparation").length}
+                  </div>
+                  <div class="text-xs text-muted-foreground">En préparation</div>
+                </div>
+              </div>
+
+              <Button class="w-full rounded-full mt-4">Soumettre un nouveau projet</Button>
+            </div>
+          </Card>
+        </div>
+
+        <!-- Liste des projets -->
+        <div class="mt-4 border rounded-lg p-4">
+          <h3 class="font-medium mb-3">Liste des projets</h3>
+          <div class="space-y-2 max-h-[300px] overflow-y-auto pr-2">
+            {projects.map((project) => (
+              <div
+                data-id={project.id}
+                class="project-item border rounded-lg p-3 cursor-pointer hover:bg-muted/50 transition-colors"
+              >
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h4 class="font-medium">{project.title}</h4>
+                    <p class="text-xs text-muted-foreground">{project.country}</p>
+                  </div>
+                  <Badge variant="outline">{project.category}</Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Version mobile -->
+    <div class="md:hidden">
+      <div class="flex flex-col gap-3 mb-4">
+        <div class="relative w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <input
+            type="text"
+            placeholder="Rechercher un projet..."
+            class="w-full pl-10 pr-4 py-2 border rounded-full text-sm"
+            id="search-input"
+          />
+        </div>
+
+        <div class="flex justify-between gap-2">
+          <Button variant="outline" class="flex-1 text-sm flex items-center gap-1 rounded-full">
+            <span id="filter-button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg> Filtres
+            </span>
+          </Button>
+
+          <Tabs value="carte" class="flex-1">
+            <div class="grid w-full grid-cols-2 h-9 bg-muted rounded-lg p-1">
+              <button class="tab-trigger data-[state=active]:bg-white data-[state=active]:text-foreground rounded-md text-xs py-1.5 transition-all" data-state="active" data-value="carte">
+                Carte
+              </button>
+              <button class="tab-trigger data-[state=active]:bg-white data-[state=active]:text-foreground rounded-md text-xs py-1.5 transition-all" data-state="inactive" data-value="details">
+                Détails
+              </button>
+            </div>
+          </Tabs>
+        </div>
+      </div>
+
+      <div class="tab-content" data-value="carte">
+        <div class="relative bg-white rounded-xl shadow-lg overflow-hidden h-[400px]">
+          <div class="absolute inset-0 bg-gray-100">
+            <!-- Carte de l'Afrique -->
+            <div class="relative w-full h-full">
+              <img
+                src="/placeholder.svg?height=400&width=400"
+                alt="Carte de l'Afrique"
+                class="w-full h-full object-cover"
+              />
+
+              <!-- Marqueurs de projets (mobile) -->
+              {projects.map((project) => (
+                <button
+                  data-id={project.id}
+                  class={`map-pin-mobile absolute w-7 h-7 rounded-full bg-${project.color} text-white flex items-center justify-center transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 transition-transform duration-200 shadow-lg`}
+                  style={`left: ${project.coordinates.x}%; top: ${project.coordinates.y}%;`}
+                  aria-label={`Voir le projet ${project.title}`}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Légende de la carte - version simplifiée pour mobile -->
+          <div class="absolute bottom-2 left-2 right-2 bg-white/90 backdrop-blur-sm rounded-lg p-2 shadow-md">
+            <div class="text-xs font-medium mb-1">
+              {projects.length} projet{projects.length > 1 ? "s" : ""} trouvé
+              {projects.length > 1 ? "s" : ""}
+            </div>
+            <div class="grid grid-cols-2 gap-1 text-xs">
+              <div class="flex items-center gap-1">
+                <div class="w-2 h-2 rounded-full bg-primary"></div>
+                <span>Afrique de l'Ouest: {projectsByRegion["Afrique de l'Ouest"]}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <div class="w-2 h-2 rounded-full bg-warning"></div>
+                <span>Afrique du Nord: {projectsByRegion["Afrique du Nord"]}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <div class="w-2 h-2 rounded-full bg-secondary"></div>
+                <span>Afrique de l'Est: {projectsByRegion["Afrique de l'Est"]}</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <div class="w-2 h-2 rounded-full bg-accent"></div>
+                <span>Afrique Centrale: {projectsByRegion["Afrique Centrale"]}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Statistiques rapides sous la carte -->
+        <div class="grid grid-cols-2 gap-2 mt-3">
+          <div class="bg-primary/10 p-2 rounded-lg text-center">
+            <div class="text-lg font-bold text-primary">{projects.length}</div>
+            <div class="text-xs text-muted-foreground">Projets totaux</div>
+          </div>
+          <div class="bg-success/10 p-2 rounded-lg text-center">
+            <div class="text-lg font-bold text-success">
+              {projects.filter((p) => p.status === "En cours").length}
+            </div>
+            <div class="text-xs text-muted-foreground">Projets actifs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content hidden" data-value="details">
+        <!-- Contenu des détails - sera rempli par JavaScript -->
+        <div id="mobile-project-details" class="mobile-project-details hidden">
+          <!-- Les détails du projet seront injectés ici par le JavaScript -->
+        </div>
+
+        <!-- Message quand aucun projet n'est sélectionné -->
+        <div id="no-project-selected" class="text-center py-8 space-y-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-12 w-12 text-muted-foreground mx-auto">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <h3 class="text-lg font-medium">Aucun projet sélectionné</h3>
+          <p class="text-sm text-muted-foreground">
+            Cliquez sur un marqueur de la carte pour voir les détails d'un projet
+          </p>
+          <Button variant="outline" class="rounded-full text-sm mobile-view-map-btn">
+            Voir la carte
+          </Button>
+        </div>
+
+        <!-- Liste des projets pour mobile -->
+        <div id="mobile-projects-list" class="mt-4 space-y-3">
+          <h3 class="font-medium text-sm">Projets ({projects.length})</h3>
+          <div class="space-y-2">
+            {projects.map((project) => (
+              <div
+                data-id={project.id}
+                class="mobile-project-item border rounded-lg p-3 cursor-pointer hover:bg-muted/50 transition-colors"
+              >
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h4 class="font-medium text-sm">{project.title}</h4>
+                    <p class="text-xs text-muted-foreground">{project.country}</p>
+                  </div>
+                  <Badge variant="outline" class="text-xs">
+                    {project.category}
+                  </Badge>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Templates pour les détails des projets -->
+<template id="project-detail-template">
+  <div class="project-detail-card">
+    <div class="p-6 border rounded-lg">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="inline-flex h-5 items-center rounded-full px-2 text-xs font-semibold project-category"></div>
+          <h3 class="mt-2 text-xl font-bold project-title"></h3>
+          <p class="text-sm text-muted-foreground project-country"></p>
+        </div>
+        <div class="inline-flex h-5 items-center rounded-full px-2 text-xs font-semibold project-status"></div>
+      </div>
+      <div class="mt-4 space-y-4">
+        <p class="text-muted-foreground project-description"></p>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div class="flex items-center gap-2 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <span class="project-participants"></span>
+          </div>
+          <div class="flex items-center gap-2 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-primary">
+              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg>
+            <span class="project-date"></span>
+          </div>
+        </div>
+
+        <div class="bg-primary/5 p-3 rounded-lg">
+          <h4 class="text-sm font-medium mb-1">Impact</h4>
+          <p class="text-sm project-impact"></p>
+        </div>
+
+        <div class="flex gap-2">
+          <a href="#" class="project-url inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 rounded-full flex-1 gap-1">
+            Voir le projet 
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" x2="21" y1="14" y2="3"></line>
+            </svg>
+          </a>
+          <button class="back-to-map inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 rounded-full flex-1">
+            Retour à la carte
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  // Attendez que le DOM soit complètement chargé
+  document.addEventListener('DOMContentLoaded', () => {
+    // Données des projets (nous les récupérons depuis le contexte Astro)
+    const projects = [
+      {
+        id: 1,
+        title: "Civic Tech Sénégal",
+        country: "Sénégal",
+        category: "Technologie Civique",
+        impact: "15 communes, 50,000 citoyens",
+        participants: 120,
+        date: "Mars 2025",
+        description:
+          "Plateforme de participation citoyenne pour améliorer la transparence gouvernementale à Dakar et renforcer l'engagement des citoyens dans les processus décisionnels locaux.",
+        coordinates: { x: 25, y: 40 },
+        color: "primary",
+        status: "En cours",
+        url: "#",
+      },
+      // ... les autres projets (ils sont déjà présents dans l'HTML généré)
+    ];
+
+    // Sélecteurs avec vérification de nullité
+    const projectDetails = document.getElementById('project-details');
+    const projectsStats = document.getElementById('projects-stats');
+    const mobileProjectDetails = document.getElementById('mobile-project-details');
+    const noProjectSelected = document.getElementById('no-project-selected');
+    const mobileProjectsList = document.getElementById('mobile-projects-list');
+    const projectDetailTemplate = document.getElementById('project-detail-template') as HTMLTemplateElement;
+    const mapPins = document.querySelectorAll('.map-pin');
+    const mapPinsMobile = document.querySelectorAll('.map-pin-mobile');
+    const projectItems = document.querySelectorAll('.project-item');
+    const mobileProjectItems = document.querySelectorAll('.mobile-project-item');
+    const mobileViewMapBtn = document.querySelector('.mobile-view-map-btn');
+    const filterButton = document.getElementById('filter-button');
+    const searchInput = document.getElementById('search-input') as HTMLInputElement;
+    const tabTriggers = document.querySelectorAll('.tab-trigger');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    // Fonction pour afficher les détails d'un projet
+    function showProjectDetails(projectId: string): void {
+      const project = projects.find(p => p.id === parseInt(projectId));
+      if (!project || !projectDetailTemplate) return;
+
+      // Clone le template
+      const template = projectDetailTemplate.content.cloneNode(true) as DocumentFragment;
+      
+      // Remplir les données du projet
+      const titleEl = template.querySelector('.project-title');
+      if (titleEl) titleEl.textContent = project.title;
+      
+      const countryEl = template.querySelector('.project-country');
+      if (countryEl) countryEl.textContent = project.country;
+      
+      const descriptionEl = template.querySelector('.project-description');
+      if (descriptionEl) descriptionEl.textContent = project.description;
+      
+      const participantsEl = template.querySelector('.project-participants');
+      if (participantsEl) participantsEl.textContent = `${project.participants} participants`;
+      
+      const dateEl = template.querySelector('.project-date');
+      if (dateEl) dateEl.textContent = project.date;
+      
+      const impactEl = template.querySelector('.project-impact');
+      if (impactEl) impactEl.textContent = project.impact;
+      
+      // Catégorie et statut
+      const categoryBadge = template.querySelector('.project-category');
+      if (categoryBadge) {
+        categoryBadge.textContent = project.category;
+        categoryBadge.classList.add(`bg-${project.color}/10`, `text-${project.color}`);
+      }
+      
+      const statusBadge = template.querySelector('.project-status');
+      if (statusBadge) {
+        statusBadge.textContent = project.status;
+        if (project.status === "En cours") {
+          statusBadge.classList.add('bg-primary/10', 'text-primary');
+        } else if (project.status === "Terminé") {
+          statusBadge.classList.add('bg-secondary/10', 'text-secondary');
+        } else {
+          statusBadge.classList.add('bg-muted', 'text-muted-foreground');
+        }
+      }
+      
+      // URL du projet
+      const urlLink = template.querySelector('.project-url') as HTMLAnchorElement;
+      if (urlLink) {
+        if (project.url) {
+          urlLink.href = project.url;
+        } else {
+          urlLink.style.display = 'none';
+        }
+      }
+      
+      // Bouton retour
+      const backBtn = template.querySelector('.back-to-map');
+      if (backBtn) {
+        backBtn.addEventListener('click', () => {
+          // Version desktop
+          if (projectDetails) {
+            projectDetails.classList.add('hidden');
+          }
+          if (projectsStats) {
+            projectsStats.classList.remove('hidden');
+          }
+          
+          // Version mobile
+          switchToTab('carte');
+        });
+      }
+      
+      // Afficher pour desktop
+      if (projectDetails) {
+        projectDetails.innerHTML = '';
+        projectDetails.appendChild(template);
+        projectDetails.classList.remove('hidden');
+      }
+      
+      if (projectsStats) {
+        projectsStats.classList.add('hidden');
+      }
+      
+      // Afficher pour mobile
+      if (mobileProjectDetails) {
+        mobileProjectDetails.innerHTML = '';
+        mobileProjectDetails.appendChild(template.cloneNode(true));
+        mobileProjectDetails.classList.remove('hidden');
+      }
+      
+      if (noProjectSelected) {
+        noProjectSelected.classList.add('hidden');
+      }
+      
+      if (mobileProjectsList) {
+        mobileProjectsList.classList.add('hidden');
+      }
+      
+      // Pour mobile, changer d'onglet
+      switchToTab('details');
+    }
+    
+    // Fonction pour changer d'onglet (mobile)
+    function switchToTab(tabValue: string): void {
+      tabTriggers.forEach(trigger => {
+        const element = trigger as HTMLElement;
+        if (element.getAttribute('data-value') === tabValue) {
+          element.setAttribute('data-state', 'active');
+        } else {
+          element.setAttribute('data-state', 'inactive');
+        }
+      });
+      
+      tabContents.forEach(content => {
+        const element = content as HTMLElement;
+        if (element.getAttribute('data-value') === tabValue) {
+          element.classList.remove('hidden');
+        } else {
+          element.classList.add('hidden');
+        }
+      });
+    }
+    
+    // Événements pour les pins de la carte
+    mapPins.forEach(pin => {
+      pin.addEventListener('click', () => {
+        const element = pin as HTMLElement;
+        const id = element.getAttribute('data-id');
+        if (id) showProjectDetails(id);
+      });
+    });
+    
+    // Événements pour les pins de la carte (mobile)
+    mapPinsMobile.forEach(pin => {
+      pin.addEventListener('click', () => {
+        const element = pin as HTMLElement;
+        const id = element.getAttribute('data-id');
+        if (id) showProjectDetails(id);
+      });
+    });
+    
+    // Événements pour les items de projet (desktop)
+    projectItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const element = item as HTMLElement;
+        const id = element.getAttribute('data-id');
+        if (id) showProjectDetails(id);
+      });
+    });
+    
+    // Événements pour les items de projet (mobile)
+    mobileProjectItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const element = item as HTMLElement;
+        const id = element.getAttribute('data-id');
+        if (id) showProjectDetails(id);
+      });
+    });
+    
+    // Bouton pour voir la carte (mobile)
+    if (mobileViewMapBtn) {
+      mobileViewMapBtn.addEventListener('click', () => {
+        switchToTab('carte');
+      });
+    }
+    
+    // Bouton de filtre (simulé pour démonstration)
+    if (filterButton) {
+      filterButton.addEventListener('click', () => {
+        alert('Fonctionnalité de filtrage à implémenter');
+      });
+    }
+    
+    // Recherche (simulée pour démonstration)
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const target = e.target as HTMLInputElement;
+        const searchText = target.value.toLowerCase();
+        // Simulation de recherche - serait implémenté avec une vraie logique de filtrage
+        console.log(`Recherche: ${searchText}`);
+      });
+    }
+    
+    // Événements pour les onglets
+    tabTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const element = trigger as HTMLElement;
+        const value = element.getAttribute('data-value');
+        if (value) switchToTab(value);
+      });
+    });
+  });
+</script>
+
+<style>
+  /* Styles pour les badges et les couleurs des projets */
+  .bg-primary { background-color: var(--primary, #3b82f6); }
+  .bg-primary\/10 { background-color: rgba(59, 130, 246, 0.1); }
+  .text-primary { color: var(--primary, #3b82f6); }
+  
+  .bg-secondary { background-color: var(--secondary, #10b981); }
+  .bg-secondary\/10 { background-color: rgba(16, 185, 129, 0.1); }
+  .text-secondary { color: var(--secondary, #10b981); }
+  
+  .bg-accent { background-color: var(--accent, #f59e0b); }
+  .bg-accent\/10 { background-color: rgba(245, 158, 11, 0.1); }
+  .text-accent { color: var(--accent, #f59e0b); }
+  
+  .bg-success { background-color: var(--success, #22c55e); }
+  .bg-success\/10 { background-color: rgba(34, 197, 94, 0.1); }
+  .text-success { color: var(--success, #22c55e); }
+  
+  .bg-warning { background-color: var(--warning, #f97316); }
+  .bg-warning\/10 { background-color: rgba(249, 115, 22, 0.1); }
+  .text-warning { color: var(--warning, #f97316); }
+  
+  .bg-info { background-color: var(--info, #06b6d4); }
+  .bg-info\/10 { background-color: rgba(6, 182, 212, 0.1); }
+  .text-info { color: var(--info, #06b6d4); }
+  
+  .bg-muted { background-color: var(--muted, #f3f4f6); }
+  .text-muted-foreground { color: var(--muted-foreground, #6b7280); }
+</style>

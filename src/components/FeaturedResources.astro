@@ -1,0 +1,171 @@
+
+---
+// FeaturedResources.astro - Adapté depuis featured-resources.tsx
+
+interface Resource {
+  id: number;
+  title: string;
+  category: string;
+  description: string;
+  image: string;
+  duration: string;
+  lessons: number;
+  rating: number;
+  seats: number;
+  price?: number;
+}
+
+const resources: Resource[] = [
+  {
+    id: 1,
+    title: "Fondamentaux de la Démocratie Numérique",
+    category: "Gouvernance",
+    description: "Découvrez les principes essentiels de la démocratie à l'ère numérique.",
+    image: "/placeholder.svg",
+    duration: "3h 45m",
+    lessons: 5,
+    rating: 4.9,
+    seats: 30,
+  },
+  {
+    id: 2,
+    title: "Engagement Citoyen sur les Réseaux Sociaux",
+    category: "Médias Sociaux",
+    description: "Stratégies pour mobiliser et engager les citoyens en ligne.",
+    image: "/placeholder.svg",
+    duration: "4h 15m",
+    lessons: 6,
+    rating: 4.7,
+    seats: 25,
+  },
+  {
+    id: 3,
+    title: "Innovation pour la Transparence",
+    category: "Innovation",
+    description: "Outils et méthodes pour promouvoir la transparence gouvernementale.",
+    image: "/placeholder.svg",
+    duration: "5h 30m",
+    lessons: 8,
+    rating: 4.8,
+    seats: 20,
+  },
+];
+---
+
+<section class="py-16 bg-gradient-to-r from-blue-50 to-purple-50">
+  <div class="container">
+    <div class="text-center mb-12">
+      <span class="text-primary font-semibold uppercase tracking-wide">RESSOURCES POPULAIRES</span>
+      <h2 class="text-3xl font-bold mt-2">
+        Nos Meilleures <span class="text-primary">Formations</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {resources.map((resource) => (
+        <div
+          class="group overflow-hidden border-none shadow-lg hover:shadow-xl transition-all duration-300 bg-white rounded-xl"
+        >
+          <div class="relative h-48">
+            <img
+              src={resource.image}
+              alt={resource.title}
+              class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <span class="absolute top-4 right-4 bg-blue-600 text-white py-1 px-3 rounded-full text-xs font-medium shadow-md">
+              {resource.category}
+            </span>
+          </div>
+
+          <div class="p-6">
+            <h3 class="font-bold text-xl mb-2 line-clamp-2">{resource.title}</h3>
+            <p class="text-gray-600 mb-4 text-sm">{resource.description}</p>
+
+            <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
+              <div class="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                {resource.duration}
+              </div>
+              <div class="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4 fill-primary text-primary"
+                >
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                {resource.rating}
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-sm">
+              <div class="flex items-center gap-2">
+                <span>{resource.lessons} Leçons</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>{resource.seats} places disponibles</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 pt-0">
+            <a
+              href="#"
+              class="block w-full py-2 px-4 text-center text-white rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 transition-colors"
+            >
+              Accéder à la formation
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="text-center mt-8">
+      <a
+        href="#"
+        class="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-sm hover:bg-gray-100 transition-colors"
+      >
+        Voir toutes les formations
+      </a>
+    </div>
+  </div>
+</section>

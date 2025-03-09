@@ -1,0 +1,171 @@
+
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const projects = [
+  {
+    id: 1,
+    title: "Africtivistes Health Lab",
+    description:
+      "Une initiative pour promouvoir la transparence et l'innovation dans le secteur de la santé en Afrique.",
+    content:
+      "Le Health Lab développe des outils numériques pour améliorer l'accès à l'information sanitaire et renforcer la participation citoyenne dans les politiques de santé publique.",
+    category: "Santé",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/AFRICTIVISTES-HEALTH-LAB-LOGO-OVkQcRGMUo1B0bV5Mp5mY8e2d4VFwD.webp",
+    url: "https://healthlab.africtivistes.org",
+    color: "blue",
+  },
+  {
+    id: 2,
+    title: "Prix Africtivistes Média & Démocratie",
+    description: "Récompense les médias qui contribuent à la promotion de la démocratie et de la bonne gouvernance.",
+    content:
+      "Ce prix annuel célèbre l'excellence journalistique et encourage les médias à jouer un rôle actif dans le renforcement des valeurs démocratiques en Afrique.",
+    category: "Média",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/coupe-2kP1XpWiIwgAUhrbGjYo51C7L7wiMi.webp",
+    url: "#",
+    color: "amber",
+  },
+  {
+    id: 3,
+    title: "Africtivistes Civic Action Prize",
+    description: "Valorise les initiatives citoyennes qui ont un impact significatif sur leurs communautés.",
+    content:
+      "Ce programme reconnaît et soutient les actions civiques innovantes qui contribuent à renforcer la démocratie et la bonne gouvernance au niveau local.",
+    category: "Engagement",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    url: "#",
+    color: "green",
+  },
+  {
+    id: 4,
+    title: "AfricTech for Democracy",
+    description: "Plateforme de collaboration entre technologues et défenseurs de la démocratie.",
+    content:
+      "Ce projet crée des synergies entre experts en technologie et activistes pour développer des solutions numériques qui renforcent les processus démocratiques.",
+    category: "Technologie",
+    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    url: "#",
+    color: "purple",
+  },
+  {
+    id: 5,
+    title: "AfricData",
+    description: "Initiative de promotion de la transparence des données publiques en Afrique.",
+    content:
+      "AfricData encourage l'ouverture des données gouvernementales et forme des journalistes et des activistes à l'utilisation des données pour le plaidoyer.",
+    category: "Données",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    url: "#",
+    color: "sky",
+  },
+  {
+    id: 6,
+    title: "AfricYouth Voices",
+    description: "Programme d'amplification de la voix des jeunes dans le débat démocratique.",
+    content:
+      "Cette initiative forme et soutient les jeunes leaders africains pour qu'ils participent activement aux processus démocratiques et aux décisions politiques.",
+    category: "Jeunesse",
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    url: "#",
+    color: "orange",
+  },
+];
+
+const getColorClass = (color: string) => {
+  const colorMap: Record<string, string> = {
+    blue: "bg-blue-50 text-blue-700",
+    amber: "bg-amber-50 text-amber-700",
+    green: "bg-green-50 text-green-700",
+    purple: "bg-purple-50 text-purple-700",
+    sky: "bg-sky-50 text-sky-700",
+    orange: "bg-orange-50 text-orange-700",
+  };
+  return colorMap[color] || "bg-gray-50 text-gray-700";
+};
+---
+
+<Layout 
+  title="Projets | Innov Africtivistes"
+  description="Découvrez nos projets innovants pour la démocratie et la gouvernance en Afrique."
+>
+  <Header slot="header" />
+  
+  <section class="py-20 bg-gradient-to-b from-white to-gray-50">
+    <div class="container px-4 mx-auto">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+          Nos Projets
+        </h1>
+        <p class="text-xl text-gray-600">
+          Découvrez nos initiatives qui visent à renforcer la démocratie, 
+          améliorer la gouvernance et promouvoir l'engagement civique en Afrique.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-gray-50">
+    <div class="container px-4 mx-auto">
+      <div class="mb-10 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap gap-2">
+          <button class="inline-flex items-center justify-center rounded-md bg-primary h-10 px-4 text-white font-medium">
+            Tous
+          </button>
+          <button class="inline-flex items-center justify-center rounded-md border border-input bg-background h-10 px-4 text-sm font-medium">
+            Santé
+          </button>
+          <button class="inline-flex items-center justify-center rounded-md border border-input bg-background h-10 px-4 text-sm font-medium">
+            Média
+          </button>
+          <button class="inline-flex items-center justify-center rounded-md border border-input bg-background h-10 px-4 text-sm font-medium">
+            Engagement
+          </button>
+          <button class="inline-flex items-center justify-center rounded-md border border-input bg-background h-10 px-4 text-sm font-medium">
+            Technologie
+          </button>
+        </div>
+        <div class="relative">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <input type="search" placeholder="Rechercher..." class="h-10 rounded-md border border-input pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project) => (
+          <div class="bg-white rounded-lg shadow-sm overflow-hidden border">
+            <img 
+              src={project.image} 
+              alt={project.title} 
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-6">
+              <span class={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium mb-3 ${getColorClass(project.color)}`}>
+                {project.category}
+              </span>
+              <h3 class="text-xl font-semibold mb-2">{project.title}</h3>
+              <p class="text-gray-600 mb-4">
+                {project.description}
+              </p>
+              <a href={`/projets/${project.id}`} class="text-primary hover:underline font-medium inline-flex items-center">
+                En savoir plus
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</Layout>

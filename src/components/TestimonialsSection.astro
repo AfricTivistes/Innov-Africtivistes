@@ -1,0 +1,153 @@
+---
+// TestimonialsSection.astro
+const testimonials = [
+  {
+    id: 1,
+    name: "Aminata Diallo",
+    role: "Fondatrice",
+    organization: "Tech4Democracy Sénégal",
+    comment:
+      "Grâce à Innov Africtivistes, notre projet a gagné en visibilité et nous avons pu créer des partenariats précieux avec d'autres innovateurs africains.",
+    image: "/placeholder.svg",
+    rating: 5,
+  },
+  {
+    id: 2,
+    name: "Kofi Mensah",
+    role: "Coordinateur",
+    organization: "Digital Rights Ghana",
+    comment:
+      "La plateforme nous a permis de partager nos meilleures pratiques et d'apprendre des expériences d'autres acteurs de la démocratie numérique en Afrique.",
+    image: "/placeholder.svg",
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: "Sarah Okonjo",
+    role: "Directrice",
+    organization: "Civic Tech Nigeria",
+    comment:
+      "Les ressources et le réseau d'Innov Africtivistes ont été déterminants dans le succès de notre initiative pour la transparence gouvernementale.",
+    image: "/placeholder.svg",
+    rating: 5,
+  },
+];
+---
+
+<section class="py-16 relative">
+  <div class="absolute inset-0 bg-gradient-to-r from-[#2563eb10] to-[#7e22ce10] z-0"></div>
+  <div class="relative z-10">
+  <div class="container">
+    <div class="text-center mb-12">
+      <span class="text-primary font-semibold uppercase tracking-wide">TÉMOIGNAGES</span>
+      <h2 class="text-3xl font-bold mt-2">
+        Ce que disent nos <span class="text-primary">Innovateurs</span>
+      </h2>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative">
+      <div id="testimonial-container">
+        {testimonials.map((testimonial, index) => (
+          <div class={`bg-white p-8 shadow-lg rounded-lg testimonial-slide ${index === 0 ? 'active' : 'hidden'}`} data-index={index}>
+            <div class="flex flex-col items-center text-center">
+              <div class="relative w-20 h-20 rounded-full overflow-hidden mb-4 bg-gray-200">
+                <img 
+                  src={testimonial.image} 
+                  alt={testimonial.name} 
+                  class="object-cover w-full h-full"
+                />
+              </div>
+
+              <div class="flex gap-1 mb-4">
+                {Array(testimonial.rating).fill(0).map((_) => (
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 fill-primary text-primary" viewBox="0 0 24 24">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                  </svg>
+                ))}
+              </div>
+
+              <blockquote class="text-lg text-gray-700 mb-6">"{testimonial.comment}"</blockquote>
+
+              <div class="space-y-1">
+                <h4 class="font-semibold text-lg">{testimonial.name}</h4>
+                <p class="text-muted-foreground text-gray-500">
+                  {testimonial.role} - {testimonial.organization}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="flex justify-center mt-6 gap-2">
+        <button
+          id="prev-button"
+          class="rounded-full p-2 bg-white border border-gray-200 hover:bg-gray-100 transition-colors"
+          aria-label="Témoignage précédent"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          id="next-button"
+          class="rounded-full p-2 bg-white border border-gray-200 hover:bg-gray-100 transition-colors"
+          aria-label="Témoignage suivant"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<script>
+  // Logique du carrousel
+  document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const prevButton = document.getElementById('prev-button');
+    const nextButton = document.getElementById('next-button');
+    let currentIndex = 0;
+
+    function showSlide(index: number) {
+      slides.forEach((slide, i) => {
+        if (i === index) {
+          slide.classList.remove('hidden');
+          slide.classList.add('active');
+        } else {
+          slide.classList.add('hidden');
+          slide.classList.remove('active');
+        }
+      });
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide(currentIndex);
+    }
+
+    if (prevButton) prevButton.addEventListener('click', prevSlide);
+    if (nextButton) nextButton.addEventListener('click', nextSlide);
+
+    // Initialisation
+    showSlide(currentIndex);
+  });
+</script>
+
+<style>
+  .hidden {
+    display: none;
+  }
+
+  .active {
+    display: block;
+  }
+</style>

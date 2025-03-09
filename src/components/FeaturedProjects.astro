@@ -1,0 +1,92 @@
+---
+const projects = [
+  {
+    id: 1,
+    title: "Africtivistes Health Lab",
+    description:
+      "Une initiative pour promouvoir la transparence et l'innovation dans le secteur de la santé en Afrique.",
+    content:
+      "Le Health Lab développe des outils numériques pour améliorer l'accès à l'information sanitaire et renforcer la participation citoyenne dans les politiques de santé publique.",
+    category: "Santé",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/AFRICTIVISTES-HEALTH-LAB-LOGO-OVkQcRGMUo1B0bV5Mp5mY8e2d4VFwD.webp",
+    url: "https://healthlab.africtivistes.org",
+    color: "info",
+  },
+  {
+    id: 2,
+    title: "Prix Africtivistes Média & Démocratie",
+    description: "Récompense les médias qui contribuent à la promotion de la démocratie et de la bonne gouvernance.",
+    content:
+      "Ce prix annuel célèbre l'excellence journalistique et encourage les médias à jouer un rôle actif dans le renforcement des valeurs démocratiques en Afrique.",
+    category: "Média",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/coupe-2kP1XpWiIwgAUhrbGjYo51C7L7wiMi.webp",
+    url: "#",
+    color: "warning",
+  },
+  {
+    id: 3,
+    title: "Africtivistes Civic Action Prize",
+    description: "Valorise les initiatives citoyennes qui ont un impact significatif sur leurs communautés.",
+    content:
+      "Ce programme identifie et soutient les champions citoyens qui développent des solutions innovantes pour répondre aux défis locaux et renforcer l'engagement civique.",
+    category: "Engagement civique",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image_1_Acap-cIcl2dxEDVo4XTVLNdLSKbUE3moHNT.webp",
+    url: "#",
+    color: "secondary",
+  },
+];
+---
+
+<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+  {projects.map((project) => (
+    <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-gray-100">
+      <div class="relative h-48 overflow-hidden bg-gray-100">
+        <img
+          src={project.image}
+          alt={project.title}
+          class="object-cover w-full h-full"
+        />
+        <div class="absolute top-4 right-4">
+          <span class={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium bg-${project.color === 'info' ? 'cyan-500' : project.color === 'warning' ? 'amber-500' : 'purple-600'} text-white`}>
+            {project.category}
+          </span>
+        </div>
+      </div>
+      <div class="p-6">
+        <h3 class="font-bold text-lg mb-2">{project.title}</h3>
+        <p class="text-muted-foreground text-sm mb-4">{project.description}</p>
+        <div class="flex justify-between items-center">
+          <a href={project.url || "#"} class="text-primary hover:underline inline-flex items-center text-sm">
+            Voir le projet
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+          <div class="flex space-x-1">
+            <button aria-label="Aimer" class="text-gray-500 hover:text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+            <button aria-label="Commenter" class="text-gray-500 hover:text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </button>
+            <button aria-label="Partager" class="text-gray-500 hover:text-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>

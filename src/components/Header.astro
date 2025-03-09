@@ -1,0 +1,148 @@
+
+---
+// Import supprimé car non utilisé
+---
+
+<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
+  <div class="container mx-auto flex h-20 items-center justify-between px-4">
+    <a href="/" class="flex items-center space-x-2">
+      <div class="relative h-12 w-12">
+        <img
+          src="/logo.svg"
+          alt="Africtivistes Logo"
+          class="object-contain w-full h-full"
+        />
+      </div>
+      <span class="hidden font-bold text-xl sm:inline-block bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
+        Innov Africtivistes
+      </span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      <a href="/" class="text-sm font-medium transition-colors hover:text-primary">
+        Accueil
+      </a>
+      <a href="/projets" class="text-sm font-medium transition-colors hover:text-primary">
+        Projets
+      </a>
+      <a href="/partenaires" class="text-sm font-medium transition-colors hover:text-primary">
+        Partenaires
+      </a>
+      <a href="/ressources" class="text-sm font-medium transition-colors hover:text-primary">
+        Ressources
+      </a>
+      <a href="/actualites" class="text-sm font-medium transition-colors hover:text-primary">
+        Actualités
+      </a>
+      <a href="/evenements" class="text-sm font-medium transition-colors hover:text-primary">
+        Événements
+      </a>
+    </nav>
+
+    <div class="hidden md:flex items-center gap-4">
+      <a href="/login" class="inline-flex items-center justify-center rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 text-sm font-medium">
+        Se connecter
+      </a>
+      <a href="/soumettre" class="inline-flex items-center justify-center rounded-full h-9 px-4 py-2 text-sm font-medium bg-blue-700 hover:bg-blue-800 text-white">
+        Soumettre un projet
+      </a>
+    </div>
+
+    <button
+      id="menuButton"
+      class="md:hidden text-foreground"
+      aria-label="Menu"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="menu-icon">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="close-icon hidden">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobileMenu" class="container md:hidden py-4 hidden">
+    <nav class="flex flex-col space-y-4">
+      <a href="/" class="text-sm font-medium transition-colors hover:text-primary">
+        Accueil
+      </a>
+      <a href="/projets" class="text-sm font-medium transition-colors hover:text-primary">
+        Projets
+      </a>
+      <a href="/partenaires" class="text-sm font-medium transition-colors hover:text-primary">
+        Partenaires
+      </a>
+      <a href="/ressources" class="text-sm font-medium transition-colors hover:text-primary">
+        Ressources
+      </a>
+      <a href="/actualites" class="text-sm font-medium transition-colors hover:text-primary">
+        Actualités
+      </a>
+      <a href="/evenements" class="text-sm font-medium transition-colors hover:text-primary">
+        Événements
+      </a>
+      <div class="flex flex-col space-y-2 pt-2">
+        <a href="/login" class="inline-flex items-center justify-center rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 text-sm font-medium w-full">
+          Se connecter
+        </a>
+        <a href="/soumettre" class="inline-flex items-center justify-center rounded-full h-9 px-4 py-2 text-sm font-medium bg-blue-700 hover:bg-blue-800 text-white w-full">
+          Soumettre un projet
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Menu mobile toggle
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuButton = document.getElementById('menuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.querySelector('.menu-icon');
+    const closeIcon = document.querySelector('.close-icon');
+    
+    if (menuButton && mobileMenu && menuIcon && closeIcon) {
+      menuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        menuIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+      });
+    }
+  });
+</script>
+
+<style>
+  /* Styles spécifiques au header */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .bg-background\/95 {
+    background-color: rgba(255, 255, 255, 0.95);
+  }
+  
+  .bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  
+  .text-transparent {
+    color: transparent;
+  }
+  
+  /* Gradient de couleur pour le texte du logo */
+  .from-primary {
+    --tw-gradient-from: var(--primary);
+    --tw-gradient-to: rgba(59, 130, 246, 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+  
+  .to-accent {
+    --tw-gradient-to: var(--accent);
+  }
+</style>
