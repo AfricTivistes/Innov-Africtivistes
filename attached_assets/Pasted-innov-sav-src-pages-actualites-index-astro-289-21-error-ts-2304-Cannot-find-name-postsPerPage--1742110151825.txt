@@ -1,0 +1,48 @@
+innov-sav/src/pages/actualites/index.astro:289:21 - error ts(2304): Cannot find name 'postsPerPage'.
+
+289           pageSize={postsPerPage}
+                        ~~~~~~~~~~~~
+innov-sav/src/pages/actualites/index.astro:288:18 - error ts(2304): Cannot find name 'posts'.
+
+288           items={posts}
+                     ~~~~~
+
+innov-sav/src/pages/partenaires/index.astro:182:94 - error ts(2322): Type '{ children: any[]; variant: "outline"; size: "sm"; href: string; target: string; rel: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'rel' does not exist on type 'IntrinsicAttributes & Props'.
+
+182                   <Button variant="outline" size="sm" href={partner.website} target="_blank" rel="noopener noreferrer">
+                                                                                                 ~~~
+innov-sav/src/pages/partenaires/index.astro:282:15 - warning ts(6133): 'category' is declared but its value is never read.
+
+282         const category = trigger.getAttribute('data-value');
+                  ~~~~~~~~
+
+innov-sav/src/pages/projets/[slug].astro:4:1 - warning ts(6133): 'Footer' is declared but its value is never read.
+
+4 import Footer from '../../components/Footer.astro';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/components/ui/EventCard.astro:2:1 - warning ts(6133): 'Image' is declared but its value is never read.
+
+2 import { Image } from 'astro:assets'
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/components/ui/pagination.astro:53:23 - warning ts(6133): 'index' is declared but its value is never read.
+
+53     {items.map((item, index) => (
+                         ~~~~~
+
+src/components/ui/tabs.astro:9:23 - warning ts(6133): 'value' is declared but its value is never read.
+
+9 const { defaultValue, value, class: className } = Astro.props;
+                        ~~~~~
+src/components/ui/tabs.astro:9:9 - warning ts(6133): 'defaultValue' is declared but its value is never read.
+
+9 const { defaultValue, value, class: className } = Astro.props;
+          ~~~~~~~~~~~~
+
+src/pages/partenaires/index.astro:182:78 - error ts(2322): Type '{ children: any[]; variant: "outline"; size: "sm"; href: string; target: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'target' does not exist on type 'IntrinsicAttributes & Props'.
+
+182                   <Button variant="outline" size="sm" href={partner.website} target="_blank">
+                                         

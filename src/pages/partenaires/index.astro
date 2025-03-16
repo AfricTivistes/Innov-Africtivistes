@@ -1,0 +1,310 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Badge from '../../components/ui/badge.astro';
+import Button from '../../components/ui/button.astro';
+import Card from '../../components/ui/card.astro';
+import Tabs from '../../components/ui/tabs.astro';
+import Search from '../../components/ui/search.astro';
+import { fade } from 'astro:transitions';
+
+interface Partner {
+  id: number;
+  name: string;
+  logo: string;
+  category: "Financier" | "Technique" | "Académique" | "Institutionnel" | "Média";
+  description: string;
+  website?: string;
+  projects?: number;
+  country: string;
+  since: number;
+}
+
+const partners: Partner[] = [
+  {
+    id: 1,
+    name: "Fondation pour la Démocratie",
+    logo: "/placeholder.svg?height=120&width=240",
+    category: "Financier",
+    description: "Organisation internationale soutenant des initiatives pour la promotion de la démocratie et la bonne gouvernance en Afrique.",
+    website: "https://example.com",
+    projects: 12,
+    country: "France",
+    since: 2018,
+  },
+  {
+    id: 2,
+    name: "Tech4Africa",
+    logo: "/placeholder.svg?height=120&width=240",
+    category: "Technique",
+    description: "Entreprise spécialisée dans le développement de solutions technologiques pour l'engagement civique et la transparence.",
+    website: "https://example.com",
+    projects: 8,
+    country: "Kenya",
+    since: 2019,
+  },
+  {
+    id: 3,
+    name: "Université de Dakar",
+    logo: "/placeholder.svg?height=120&width=240",
+    category: "Académique",
+    description: "Institution académique collaborant sur des recherches et formations liées à la gouvernance numérique.",
+    website: "https://example.com",
+    projects: 5,
+    country: "Sénégal",
+    since: 2020,
+  },
+  {
+    id: 4,
+    name: "Commission Africaine des Droits",
+    logo: "/placeholder.svg?height=120&width=240",
+    category: "Institutionnel",
+    description: "Organisation panafricaine œuvrant pour la protection et la promotion des droits humains et des peuples en Afrique.",
+    website: "https://example.com",
+    projects: 7,
+    country: "Éthiopie",
+    since: 2017,
+  },
+  {
+    id: 5,
+    name: "Africa Media Network",
+    logo: "/placeholder.svg?height=120&width=240",
+    category: "Média",
+    description: "Réseau de médias indépendants promouvant le journalisme d'investigation et la liberté de la presse.",
+    website: "https://example.com",
+    projects: 10,
+    country: "Ghana",
+    since: 2016,
+  },
+  {
+    id: 6,
+    name: "Digital Rights Foundation",
+    logo: "/placeholder.svg?height=120&width=240",
+    category: "Technique",
+    description: "Organisation dédiée à la protection des droits numériques et de la vie privée des citoyens africains.",
+    website: "https://example.com",
+    projects: 9,
+    country: "Nigeria",
+    since: 2018,
+  },
+  {
+    id: 7,
+    name: "Fonds pour l'Innovation Civique",
+    logo: "/placeholder.svg?height=120&width=240",
+    category: "Financier",
+    description: "Fonds d'investissement soutenant des startups et initiatives innovantes dans le domaine de l'engagement civique.",
+    website: "https://example.com",
+    projects: 15,
+    country: "Belgique",
+    since: 2019,
+  },
+  {
+    id: 8,
+    name: "Institut de Gouvernance",
+    logo: "/placeholder.svg?height=120&width=240",
+    category: "Académique",
+    description: "Centre de recherche spécialisé dans l'étude des systèmes de gouvernance et des politiques publiques en Afrique.",
+    website: "https://example.com",
+    projects: 6,
+    country: "Maroc",
+    since: 2020,
+  },
+];
+
+const categories = ["Tous", "Financier", "Technique", "Académique", "Institutionnel", "Média"];
+---
+
+<Layout title="Nos Partenaires | Innov Africtivistes">
+  <section class="bg-gradient-to-r from-primary to-accent text-white py-12 md:py-16" transition:name="hero">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTI4MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTAgNTEuNzZjMzYuMjEtMi4yNSA3Ny41Ny0zLjU4IDEyNi40Mi0zLjU4IDMyMCAwIDMyMCA1NyA2NDAgNTcgMjcxLjE1IDAgMzEyLjU4LTQwLjkxIDUxMy41OC01Ny40OFYwSDB6Ii8+PC9nPjwvc3ZnPg==')] bg-bottom bg-no-repeat opacity-10"></div>
+    <div class="container px-4 md:px-6 relative" transition:animate={fade({ duration: '0.8s' })}>
+      <h1 class="text-3xl md:text-5xl font-bold mb-4">Nos Partenaires</h1>
+      <p class="text-lg md:text-xl text-white/80 max-w-3xl">
+        Découvrez les organisations qui soutiennent notre mission et collaborent avec nous pour promouvoir
+        l'innovation, la démocratie et la bonne gouvernance en Afrique.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-8 border-b -mt-6 relative z-10 bg-white rounded-t-3xl">
+    <div class="container px-4 md:px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-4">
+        <Search placeholder="Rechercher un partenaire..." class="md:w-96" />
+        <Tabs defaultValue="Tous" class="w-full md:w-auto">
+          <div class="flex space-x-2 overflow-x-auto">
+            {categories.map(category => (
+              <button
+                class="tab-trigger px-4 py-2 rounded-full text-sm font-medium transition-colors hover:bg-primary/10 data-[state=active]:bg-primary data-[state=active]:text-white"
+                data-value={category}
+                data-state={category === "Tous" ? "active" : "inactive"}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </Tabs>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-8 md:py-12">
+    <div class="container px-4 md:px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {partners.map(partner => (
+          <Card class="overflow-hidden border-none shadow-md hover:shadow-lg transition-all duration-300 partner-card">
+            <div class="bg-muted/30 p-6 flex items-center justify-center h-40">
+              <img
+                src={partner.logo}
+                alt={`Logo ${partner.name}`}
+                class="h-20 object-contain"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl font-semibold">{partner.name}</h3>
+                <Badge>{partner.category}</Badge>
+              </div>
+              <div class="flex items-center gap-1 text-sm text-gray-500 mb-4">
+                <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                </svg>
+                {partner.country} • Depuis {partner.since}
+              </div>
+              <p class="text-sm text-gray-600 mb-4">{partner.description}</p>
+              <div class="flex justify-between items-center">
+                {partner.projects && (
+                  <div class="flex items-center gap-1 text-sm">
+                    <svg class="h-4 w-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                    </svg>
+                    <span>{partner.projects} projets soutenus</span>
+                  </div>
+                )}
+                {partner.website && (
+                  <Button variant="outline" size="sm" href={partner.website} target="_blank">
+                    Visiter
+                    <svg class="h-3 w-3 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                  </Button>
+                )}
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-8 md:py-16 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl mx-4">
+    <div class="container px-4 md:px-6">
+      <div class="text-center mb-8">
+        <Badge variant="default" class="bg-primary/10 text-primary mb-2">Collaboration</Badge>
+        <h2 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          Devenez partenaire
+        </h2>
+        <p class="text-gray-600 max-w-2xl mx-auto mt-2">
+          Rejoignez notre réseau de partenaires et contribuez à l'écosystème d'innovation pour la démocratie et la
+          gouvernance en Afrique.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <Card class="bg-white">
+          <div class="p-6 text-center">
+            <div class="mx-auto bg-primary/10 w-12 h-12 flex items-center justify-center rounded-full mb-4">
+              <svg class="h-6 w-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Visibilité</h3>
+            <p class="text-sm text-gray-600">
+              Bénéficiez d'une visibilité auprès de notre communauté d'innovateurs et d'acteurs de la démocratie en
+              Afrique.
+            </p>
+          </div>
+        </Card>
+
+        <Card class="bg-white">
+          <div class="p-6 text-center">
+            <div class="mx-auto bg-accent/10 w-12 h-12 flex items-center justify-center rounded-full mb-4">
+              <svg class="h-6 w-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Réseau</h3>
+            <p class="text-sm text-gray-600">
+              Accédez à un réseau de partenaires stratégiques et d'innovateurs à travers le continent africain.
+            </p>
+          </div>
+        </Card>
+
+        <Card class="bg-white">
+          <div class="p-6 text-center">
+            <div class="mx-auto bg-secondary/10 w-12 h-12 flex items-center justify-center rounded-full mb-4">
+              <svg class="h-6 w-6 text-secondary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Impact</h3>
+            <p class="text-sm text-gray-600">
+              Contribuez à des projets à fort impact qui transforment la démocratie et la gouvernance en Afrique.
+            </p>
+          </div>
+        </Card>
+      </div>
+
+      <div class="text-center mt-8">
+        <Button class="rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
+          Devenir partenaire
+        </Button>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Logique de filtrage des partenaires
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.querySelector('input[type="text"]');
+    const tabTriggers = document.querySelectorAll('.tab-trigger');
+    const partnerCards = document.querySelectorAll('.partner-card');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', filterPartners);
+    }
+
+    tabTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        // Mettre à jour l'état actif des onglets
+        tabTriggers.forEach(t => {
+          t.setAttribute('data-state', t === trigger ? 'active' : 'inactive');
+        });
+
+        filterPartners();
+      });
+    });
+
+    function filterPartners() {
+        const searchInput = document.querySelector('input[type="text"]');
+        const searchTerm = searchInput instanceof HTMLInputElement ? searchInput.value.toLowerCase() : '';
+        const activeCategory = document.querySelector('.tab-trigger[data-state="active"]')?.getAttribute('data-value') || 'Tous';
+
+        partnerCards.forEach(card => {
+          if (card instanceof HTMLElement) {
+            const name = card.querySelector('h3')?.textContent?.toLowerCase() || '';
+            const category = card.querySelector('.badge')?.textContent?.toLowerCase() || '';
+
+            const matchesSearch = name.includes(searchTerm);
+            const matchesCategory = activeCategory === 'Tous' || category === activeCategory.toLowerCase();
+
+            card.style.display = matchesSearch && matchesCategory ? 'block' : 'none';
+          }
+        });
+      }
+  });
+</script>

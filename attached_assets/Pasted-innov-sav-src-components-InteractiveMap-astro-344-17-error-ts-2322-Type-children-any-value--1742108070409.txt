@@ -1,0 +1,125 @@
+innov-sav/src/components/InteractiveMap.astro:344:17 - error ts(2322): Type '{ children: any; value: string; class: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'value' does not exist on type 'IntrinsicAttributes & Props'.
+
+344           <Tabs value="carte" class="flex-1">
+                    ~~~~~
+
+innov-sav/src/components/ui/EventCard.astro:78:9 - error ts(2322): Type '{ children: string; class: string; disabled: boolean; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'disabled' does not exist on type 'IntrinsicAttributes & Props'.
+
+78         disabled={!event.registrationOpen}
+           ~~~~~~~~
+innov-sav/src/components/ui/EventCard.astro:13:16 - warning ts(6133): 'featured' is declared but its value is never read.
+
+13 const { event, featured = false } = Astro.props
+                  ~~~~~~~~
+innov-sav/src/components/ui/EventCard.astro:2:1 - warning ts(6133): 'Image' is declared but its value is never read.
+
+2 import { Image } from 'astro:assets'
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+innov-sav/src/components/ui/pagination.astro:53:23 - warning ts(6133): 'index' is declared but its value is never read.
+
+53     {items.map((item, index) => (
+                         ~~~~~
+
+innov-sav/src/components/ui/tabs.astro:7:9 - warning ts(6133): 'defaultValue' is declared but its value is never read.
+
+7 const { defaultValue, class: className } = Astro.props;
+          ~~~~~~~~~~~~
+
+innov-sav/src/pages/contact.astro:162:23 - error ts(2322): Type '{ children: string; type: string; class: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & Props'.
+
+162               <Button type="submit" class="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-full py-3">
+                          ~~~~
+
+innov-sav/src/pages/partenaires/index.astro:182:55 - error ts(2322): Type '{ children: any[]; variant: "outline"; size: "sm"; href: string; target: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'href' does not exist on type 'IntrinsicAttributes & Props'.
+
+182                   <Button variant="outline" size="sm" href={partner.website} target="_blank">
+                                                          ~~~~
+innov-sav/src/pages/partenaires/index.astro:131:15 - error ts(2322): Type '{ children: any; value: string; class: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'value' does not exist on type 'IntrinsicAttributes & Props'.
+
+131         <Tabs value="Tous" class="w-full md:w-auto">
+                  ~~~~~
+innov-sav/src/pages/partenaires/index.astro:304:14 - error ts(2339): Property 'style' does not exist on type 'Element'.
+
+304         card.style.display = matchesSearch && matchesCategory ? 'block' : 'none';
+                 ~~~~~
+innov-sav/src/pages/partenaires/index.astro:302:75 - error ts(18049): 'activeCategory' is possibly 'null' or 'undefined'.
+
+302         const matchesCategory = activeCategory === 'Tous' || category === activeCategory.toLowerCase();
+                                                                              ~~~~~~~~~~~~~~
+innov-sav/src/pages/partenaires/index.astro:294:52 - error ts(2339): Property 'value' does not exist on type 'Element'.
+
+294       const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+                                                       ~~~~~
+innov-sav/src/pages/partenaires/index.astro:282:15 - warning ts(6133): 'category' is declared but its value is never read.
+
+282         const category = trigger.getAttribute('data-value');
+                  ~~~~~~~~
+
+innov-sav/src/pages/projets/[slug].astro:4:1 - warning ts(6133): 'Footer' is declared but its value is never read.
+
+4 import Footer from '../../components/Footer.astro';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+innov-sav/src/pages/ressources/index.astro:5:1 - warning ts(6133): 'Button' is declared but its value is never read.
+
+5 import Button from '../../components/ui/button.astro';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+innov-sav/src/pages/ressources/index.astro:4:1 - warning ts(6133): 'Footer' is declared but its value is never read.
+
+4 import Footer from '../../components/Footer.astro';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+innov-sav/src/pages/ressources/index.astro:3:1 - warning ts(6133): 'Header' is declared but its value is never read.
+
+3 import Header from '../../components/Header.astro';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/components/InteractiveMap.astro:344:17 - error ts(2322): Type '{ children: any; value: string; class: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'value' does not exist on type 'IntrinsicAttributes & Props'.
+
+344           <Tabs value="carte" class="flex-1">
+                    ~~~~~
+
+src/components/ui/EventCard.astro:78:9 - error ts(2322): Type '{ children: string; class: string; disabled: boolean; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'disabled' does not exist on type 'IntrinsicAttributes & Props'.
+
+78         disabled={!event.registrationOpen}
+           ~~~~~~~~
+src/components/ui/EventCard.astro:13:16 - warning ts(6133): 'featured' is declared but its value is never read.
+
+13 const { event, featured = false } = Astro.props
+                  ~~~~~~~~
+src/components/ui/EventCard.astro:2:1 - warning ts(6133): 'Image' is declared but its value is never read.
+
+2 import { Image } from 'astro:assets'
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/components/ui/pagination.astro:53:23 - warning ts(6133): 'index' is declared but its value is never read.
+
+53     {items.map((item, index) => (
+                         ~~~~~
+
+src/components/ui/tabs.astro:7:9 - warning ts(6133): 'defaultValue' is declared but its value is never read.
+
+7 const { defaultValue, class: className } = Astro.props;
+          ~~~~~~~~~~~~
+
+src/pages/contact.astro:162:23 - error ts(2322): Type '{ children: string; type: string; class: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & Props'.
+
+162               <Button type="submit" class="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-full py-3">
+                          ~~~~
+
+src/pages/partenaires/index.astro:182:55 - error ts(2322): Type '{ children: any[]; variant: "outline"; size: "sm"; href: string; target: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'href' does not exist on type 'IntrinsicAttributes & Props'.
+
+182                   <Button variant="outline" size="sm" href={partner.website} target="_blank">
+                                                          ~~~~
+src/pages/partenaires/index.astro:282:15 - warning ts(6133): 'category' is declared but its value is never read.
+
+282         const category = trigger.getAttribute('data-value');

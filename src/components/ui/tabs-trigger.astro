@@ -1,0 +1,30 @@
+---
+export interface Props {
+  value: string;
+  class?: string;
+}
+
+const { value, class: className } = Astro.props;
+---
+
+<button class={`tabs-trigger ${className || ''}`} data-value={value}>
+  <slot />
+</button>
+
+<style>
+  .tabs-trigger {
+    all: unset;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    transition: all 0.2s;
+  }
+
+  .tabs-trigger:hover {
+    background-color: rgb(var(--color-background));
+  }
+
+  .tabs-trigger[data-state="active"] {
+    background-color: rgb(var(--color-background));
+  }
+</style>

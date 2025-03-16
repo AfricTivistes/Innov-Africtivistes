@@ -1,0 +1,43 @@
+innov-sav/src/pages/contact.astro:162:23 - error ts(2322): Type '{ children: string; type: string; class: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'type' does not exist on type 'IntrinsicAttributes & Props'.
+
+162               <Button type="submit" class="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white rounded-full py-3">
+                          ~~~~
+
+innov-sav/src/pages/evenements/index.astro:91:36 - error ts(2322): Type '{ event: Event; featured: boolean; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'featured' does not exist on type 'IntrinsicAttributes & Props'.
+
+91           <EventCard event={event} featured={true} />
+                                      ~~~~~~~~
+
+innov-sav/src/pages/partenaires/index.astro:182:78 - error ts(2322): Type '{ children: any[]; variant: "outline"; size: "sm"; href: string; target: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'target' does not exist on type 'IntrinsicAttributes & Props'.
+
+182                   <Button variant="outline" size="sm" href={partner.website} target="_blank">
+                                                                                 ~~~~~~
+innov-sav/src/pages/partenaires/index.astro:131:15 - error ts(2322): Type '{ children: any; value: string; class: string; }' is not assignable to type 'IntrinsicAttributes & Props'.
+  Property 'value' does not exist on type 'IntrinsicAttributes & Props'.
+
+131         <Tabs value="Tous" class="w-full md:w-auto">
+                  ~~~~~
+innov-sav/src/pages/partenaires/index.astro:304:14 - error ts(2339): Property 'style' does not exist on type 'Element'.
+
+304         card.style.display = matchesSearch && matchesCategory ? 'block' : 'none';
+                 ~~~~~
+innov-sav/src/pages/partenaires/index.astro:302:75 - error ts(18049): 'activeCategory' is possibly 'null' or 'undefined'.
+
+302         const matchesCategory = activeCategory === 'Tous' || category === activeCategory.toLowerCase();
+                                                                              ~~~~~~~~~~~~~~
+innov-sav/src/pages/partenaires/index.astro:294:52 - error ts(2339): Property 'value' does not exist on type 'Element'.
+
+294       const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+                                                       ~~~~~
+innov-sav/src/pages/partenaires/index.astro:282:15 - warning ts(6133): 'category' is declared but its value is never read.
+
+282         const category = trigger.getAttribute('data-value');
+                  ~~~~~~~~
+
+innov-sav/src/pages/projets/[slug].astro:4:1 - warning ts(6133): 'Footer' is declared but its value is never read.
+
+4 import Footer from '../../components/Footer.astro';
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

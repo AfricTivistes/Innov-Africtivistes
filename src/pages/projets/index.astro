@@ -1,12 +1,16 @@
-
 ---
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Button from '../../components/ui/button.astro';
+import Badge from '../../components/ui/badge.astro';
+import Card from '../../components/ui/card.astro';
+import { fade } from 'astro:transitions';
 
 const projects = [
   {
     id: 1,
+    slug: "civic-tech-senegal",
     title: "Africtivistes Health Lab",
     description:
       "Une initiative pour promouvoir la transparence et l'innovation dans le secteur de la santé en Afrique.",
@@ -20,6 +24,7 @@ const projects = [
   },
   {
     id: 2,
+    slug: "prix-media-democratie",
     title: "Prix Africtivistes Média & Démocratie",
     description: "Récompense les médias qui contribuent à la promotion de la démocratie et de la bonne gouvernance.",
     content:
@@ -31,45 +36,50 @@ const projects = [
   },
   {
     id: 3,
+    slug: "civic-action-prize",
     title: "Africtivistes Civic Action Prize",
     description: "Valorise les initiatives citoyennes qui ont un impact significatif sur leurs communautés.",
     content:
-      "Ce programme reconnaît et soutient les actions civiques innovantes qui contribuent à renforcer la démocratie et la bonne gouvernance au niveau local.",
-    category: "Engagement",
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "Ce programme identifie et soutient les champions citoyens qui développent des solutions innovantes pour répondre aux défis locaux et renforcer l'engagement civique.",
+    category: "Engagement civique",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image_1_Acap-cIcl2dxEDVo4XTVLNdLSKbUE3moHNT.webp",
     url: "#",
     color: "green",
   },
   {
     id: 4,
-    title: "AfricTech for Democracy",
-    description: "Plateforme de collaboration entre technologues et défenseurs de la démocratie.",
+    slug: "innov4democracy",
+    title: "Hackathon #Innov4Democracy",
+    description: "Un marathon de programmation pour développer des solutions technologiques innovantes.",
     content:
-      "Ce projet crée des synergies entre experts en technologie et activistes pour développer des solutions numériques qui renforcent les processus démocratiques.",
+      "Cet événement rassemble des développeurs, designers et experts en gouvernance pour créer des outils numériques qui renforcent la démocratie et la transparence.",
     category: "Technologie",
-    image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp-Image-2023-12-20-at-21.12.17-1-VehI8e9M5X1LPy8wIjsdzNrSSr1iOf.webp",
     url: "#",
     color: "purple",
   },
   {
     id: 5,
-    title: "AfricData",
-    description: "Initiative de promotion de la transparence des données publiques en Afrique.",
+    slug: "champion-gouvernance",
+    title: "Champion de la Gouvernance",
+    description: "Programme de reconnaissance des acteurs qui promeuvent la bonne gouvernance.",
     content:
-      "AfricData encourage l'ouverture des données gouvernementales et forme des journalistes et des activistes à l'utilisation des données pour le plaidoyer.",
-    category: "Données",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "Cette initiative identifie et célèbre les individus et organisations qui contribuent de manière significative à l'amélioration de la gouvernance en Afrique.",
+    category: "Gouvernance",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Visuel-FR-1-ENdqiSNwoGY5q3tED6WZybjO4WROzf.webp",
     url: "#",
     color: "sky",
   },
   {
     id: 6,
-    title: "AfricYouth Voices",
-    description: "Programme d'amplification de la voix des jeunes dans le débat démocratique.",
+    slug: "democratie-numerique",
+    title: "Projet Démocratie Numérique",
+    description: "Utilisation des technologies pour renforcer les processus démocratiques.",
     content:
-      "Cette initiative forme et soutient les jeunes leaders africains pour qu'ils participent activement aux processus démocratiques et aux décisions politiques.",
-    category: "Jeunesse",
-    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "Ce projet explore comment les outils numériques peuvent améliorer la participation citoyenne, la transparence électorale et l'accès à l'information.",
+    category: "Démocratie",
+    image: "/placeholder.svg",
     url: "#",
     color: "orange",
   },
@@ -94,78 +104,126 @@ const getColorClass = (color: string) => {
 >
   <Header slot="header" />
   
-  <section class="py-20 bg-gradient-to-b from-white to-gray-50">
-    <div class="container px-4 mx-auto">
-      <div class="max-w-3xl mx-auto text-center">
-        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-          Nos Projets
-        </h1>
-        <p class="text-xl text-gray-600">
-          Découvrez nos initiatives qui visent à renforcer la démocratie, 
-          améliorer la gouvernance et promouvoir l'engagement civique en Afrique.
-        </p>
+  <section class="bg-gradient-to-r from-primary to-accent text-white py-16 relative overflow-hidden" transition:name="hero">
+    <div class="absolute inset-0 bg-[url('/background.svg')] bg-bottom bg-no-repeat opacity-10"></div>
+    <div class="container px-4 relative" transition:animate={fade({ duration: '0.8s' })}>
+      <h1 class="text-3xl md:text-5xl font-bold mb-4">Projets innovants</h1>
+      <p class="text-xl text-white/80 max-w-3xl">
+        Découvrez des initiatives qui transforment la démocratie, la gouvernance et l'engagement civique en Afrique.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-8 border-b -mt-6 relative z-10 bg-white rounded-t-3xl">
+    <div class="container px-4">
+      <div class="flex flex-col md:flex-row justify-between gap-4">
+        <div class="relative w-full md:w-96">
+          <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+          </svg>
+          <input
+            type="text"
+            placeholder="Rechercher un projet..."
+            class="w-full pl-10 pr-4 py-3 border rounded-full"
+          />
+        </div>
+        <div class="flex gap-2">
+          <Button variant="outline" class="flex items-center gap-2 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/>
+            </svg>
+            Filtrer
+          </Button>
+          <select class="border rounded-full px-4 py-2">
+            <option value="">Toutes les catégories</option>
+            <option value="sante">Santé</option>
+            <option value="media">Média</option>
+            <option value="engagement">Engagement civique</option>
+            <option value="technologie">Technologie</option>
+            <option value="gouvernance">Gouvernance</option>
+            <option value="democratie">Démocratie</option>
+          </select>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="py-16 bg-gray-50">
-    <div class="container px-4 mx-auto">
-      <div class="mb-10 flex flex-wrap items-center justify-between gap-4">
-        <div class="flex flex-wrap gap-2">
-          <button class="inline-flex items-center justify-center rounded-md bg-primary h-10 px-4 text-white font-medium">
-            Tous
-          </button>
-          <button class="inline-flex items-center justify-center rounded-md border border-input bg-background h-10 px-4 text-sm font-medium">
-            Santé
-          </button>
-          <button class="inline-flex items-center justify-center rounded-md border border-input bg-background h-10 px-4 text-sm font-medium">
-            Média
-          </button>
-          <button class="inline-flex items-center justify-center rounded-md border border-input bg-background h-10 px-4 text-sm font-medium">
-            Engagement
-          </button>
-          <button class="inline-flex items-center justify-center rounded-md border border-input bg-background h-10 px-4 text-sm font-medium">
-            Technologie
-          </button>
-        </div>
-        <div class="relative">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </svg>
-          <input type="search" placeholder="Rechercher..." class="h-10 rounded-md border border-input pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary" />
-        </div>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <section class="py-12">
+    <div class="container px-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project) => (
-          <div class="bg-white rounded-lg shadow-sm overflow-hidden border">
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              class="w-full h-48 object-cover"
-            />
-            <div class="p-6">
-              <span class={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium mb-3 ${getColorClass(project.color)}`}>
+          <Card class="overflow-hidden border-none shadow-lg hover:shadow-xl transition-all duration-300 group">
+            <div class="relative h-48 w-full overflow-hidden">
+              <img 
+                src={project.image} 
+                alt={project.title} 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <Badge class={`absolute top-3 right-3 ${getColorClass(project.color)} border-none`}>
                 {project.category}
-              </span>
-              <h3 class="text-xl font-semibold mb-2">{project.title}</h3>
-              <p class="text-gray-600 mb-4">
-                {project.description}
-              </p>
-              <a href={`/projets/${project.id}`} class="text-primary hover:underline font-medium inline-flex items-center">
-                En savoir plus
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </a>
+              </Badge>
             </div>
-          </div>
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">{project.title}</h3>
+              <p class="text-gray-600 mb-4 text-sm">{project.description}</p>
+              <p class="text-sm text-gray-500 mb-4">{project.content}</p>
+              <div class="flex justify-between items-center">
+                <div class="flex space-x-2">
+                  <button class="h-8 w-8 rounded-full hover:bg-gray-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                    </svg>
+                  </button>
+                  <button class="h-8 w-8 rounded-full hover:bg-gray-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                  </button>
+                  <button class="h-8 w-8 rounded-full hover:bg-gray-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                      <polyline points="16 6 12 2 8 6"/>
+                      <line x1="12" y1="2" x2="12" y2="15"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="flex items-center gap-2">
+                  <a href={`/projets/${project.slug}`} class="text-primary hover:underline text-sm">
+                    En savoir plus
+                  </a>
+                  {project.url && (
+                    <a href={project.url} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-primary hover:underline text-sm">
+                      Visiter
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Card>
         ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <Button class="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 rounded-full">
+          Soumettre un projet
+        </Button>
       </div>
     </div>
   </section>
 
   <Footer slot="footer" />
 </Layout>
+
+<style>
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+</style>

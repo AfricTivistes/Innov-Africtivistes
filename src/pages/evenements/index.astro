@@ -1,0 +1,148 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Button from '../../components/ui/button.astro'
+import Badge from '../../components/ui/badge.astro'
+import EventCard from '../../components/ui/EventCard.astro'
+import Tabs from '../../components/ui/tabs.astro'
+import TabsList from '../../components/ui/tabs-list.astro'
+import TabsTrigger from '../../components/ui/tabs-trigger.astro'
+import { events, categories, statuses } from '../../data/events'
+import { fade } from 'astro:transitions';
+
+const featuredEvents = events.filter((event) => event.featured)
+const upcomingEvents = events.filter((event) => !event.featured && event.status === "À venir")
+---
+
+<Layout title="Événements">
+  <section class="bg-gradient-to-r from-primary to-accent text-white py-12 md:py-16 relative overflow-hidden" transition:name="hero">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTI4MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTAgNTEuNzZjMzYuMjEtMi4yNSA3Ny41Ny0zLjU4IDEyNi40Mi0zLjU4IDMyMCAwIDMyMCA1NyA2NDAgNTcgMjcxLjE1IDAgMzEyLjU4LTQwLjkxIDUxMy41OC01Ny40OFYwSDB6Ii8+PC9nPjwvc3ZnPg==')] bg-bottom bg-no-repeat opacity-10"></div>
+    <div class="container px-4 md:px-6 relative" transition:animate={fade({ duration: '0.8s' })}>
+      <h1 class="text-3xl md:text-5xl font-bold mb-4">Événements</h1>
+      <p class="text-lg md:text-xl text-white/80 max-w-3xl">
+        Découvrez et participez à nos événements pour rencontrer d'autres innovateurs, partager vos expériences et
+        développer vos compétences.
+      </p>
+    </div>
+  </section>
+
+  <section class="py-8 border-b -mt-6 relative z-10 bg-white rounded-t-3xl">
+    <div class="container px-4 md:px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-4">
+        <div class="relative w-full md:w-96">
+          <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            type="text"
+            placeholder="Rechercher un événement..."
+            class="w-full pl-10 pr-4 py-2 md:py-3 border rounded-full text-sm"
+          />
+        </div>
+        
+        <div class="flex flex-wrap gap-2">
+          <Tabs defaultValue="Tous" class="w-full md:w-auto">
+            <TabsList class="h-9 md:h-10 bg-muted/50 p-1 rounded-full">
+              {categories.map((category) => (
+                <TabsTrigger
+                  value={category}
+                  class="rounded-full text-xs md:text-sm px-3 py-1 h-7 md:h-8"
+                >
+                  {category}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+
+          <div class="relative">
+            <Button variant="outline" class="flex items-center gap-2 text-sm h-9 md:h-10 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14"></line>
+                <line x1="4" y1="10" x2="4" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12" y2="3"></line>
+                <line x1="20" y1="21" x2="20" y2="16"></line>
+                <line x1="20" y1="12" x2="20" y2="3"></line>
+                <line x1="1" y1="14" x2="7" y2="14"></line>
+                <line x1="9" y1="8" x2="15" y2="8"></line>
+                <line x1="17" y1="16" x2="23" y2="16"></line>
+              </svg>
+              Statut
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </Button>
+            <select class="absolute inset-0 opacity-0 cursor-pointer w-full">
+              {statuses.map((status) => (
+                <option value={status}>{status}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Événements à la une -->
+  <section class="py-8 md:py-12">
+    <div class="container px-4 md:px-6">
+      <h2 class="text-2xl font-bold mb-6">Événements à la une</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        {featuredEvents.map((event) => (
+          <EventCard event={event} featured={true} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendrier des événements -->
+  <section class="py-8 md:py-12 bg-muted/20">
+    <div class="container px-4 md:px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Prochains événements</h2>
+        <a href="/evenements/calendrier">
+          <Button variant="outline" size="sm" class="mt-2 md:mt-0 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Voir le calendrier
+          </Button>
+        </a>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {upcomingEvents.map((event) => (
+          <EventCard event={event} />
+        ))}
+      </div>
+
+      <div class="mt-8 text-center">
+        <Button variant="outline" class="rounded-full">
+          Voir tous les événements
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proposer un événement -->
+  <section class="py-8 md:py-16 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl mx-4">
+    <div class="container px-4 md:px-6">
+      <div class="text-center max-w-2xl mx-auto">
+        <Badge class="bg-primary/10 text-primary mb-2">Participation</Badge>
+        <h2 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4">
+          Proposez votre événement
+        </h2>
+        <p class="text-muted-foreground mb-6">
+          Vous organisez un événement lié à l'innovation, la démocratie ou la gouvernance en Afrique ? Proposez-le
+          sur notre plateforme pour toucher une communauté engagée.
+        </p>
+        <Button class="rounded-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
+          Soumettre un événement
+        </Button>
+      </div>
+    </div>
+  </section>
+</Layout>

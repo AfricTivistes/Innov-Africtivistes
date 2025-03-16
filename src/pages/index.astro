@@ -1,7 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
 import FeaturedProjects from '../components/FeaturedProjects.astro';
 import StatisticsSection from '../components/StatisticsSection.astro';
@@ -16,10 +14,9 @@ import LatestNews from '../components/LatestNews.astro';
   title="Innov Africtivistes | Plateforme d'innovation pour la démocratie et la gouvernance"
   description="Découvrez des projets innovants qui promeuvent la démocratie, la gouvernance et l'engagement civique en Afrique."
 >
-  <Header slot="header" />
   
   <!-- Hero Section -->
-  <section class="bg-gradient-to-r from-blue-600 to-violet-500 py-20 md:py-28 text-white relative overflow-hidden">
+  <section class="bg-gradient-to-r from-blue-600 to-violet-500 py-20 md:py-28 text-white relative overflow-hidden" transition:name="hero">
     <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMTI4MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTAgNTEuNzZjMzYuMjEtMi4yNSA3Ny41Ny0zLjU4IDEyNi40Mi0zLjU4IDMyMCAwIDMyMCA1NyA2NDAgNTcgMjcxLjE1IDAgMzEyLjU4LTQwLjkxIDUxMy41OC01Ny40OFYwSDB6Ii8+PC9nPjwvc3ZnPg==')] bg-bottom bg-no-repeat opacity-10"></div>
     <div class="container relative">
       <div class="grid gap-8 md:grid-cols-2 items-center">
@@ -408,5 +405,4 @@ import LatestNews from '../components/LatestNews.astro';
     </div>
   </section>
 
-  <Footer slot="footer" />
 </Layout>

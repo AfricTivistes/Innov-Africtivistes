@@ -1,0 +1,315 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Badge from '../../components/ui/badge.astro';
+import Button from '../../components/ui/button.astro';
+import Card from '../../components/ui/card.astro';
+import Tabs from '../../components/ui/tabs.astro';
+import Search from '../../components/ui/search.astro';
+import Pagination from '../../components/ui/pagination.astro';
+import { fade } from 'astro:transitions';
+
+const categories = ["Tous", "Démocratie", "Technologie", "Événements", "Leadership", "Média", "Engagement"];
+
+const articles = [
+  {
+    id: 1,
+    title: "L'Innovation Démocratique en Afrique de l'Ouest : Tendances et Perspectives",
+    slug: "innovation-democratique-afrique-ouest",
+    excerpt: "Découvrez les dernières initiatives qui transforment la participation citoyenne dans la région et renforcent les processus démocratiques.",
+    content: "",
+    category: "Démocratie",
+    image: "/placeholder.svg",
+    author: {
+      name: "Aminata Diallo",
+      avatar: "/placeholder.svg",
+    },
+    date: "28 Mars 2025",
+    readTime: 8,
+    views: 1250,
+    featured: true,
+  },
+  {
+    id: 2,
+    title: "Hackathon pour la Transparence Gouvernementale : Résultats et Innovations",
+    slug: "hackathon-transparence-gouvernementale",
+    excerpt: "Retour sur trois jours d'innovation intensive pour la transparence et la bonne gouvernance avec des solutions concrètes développées.",
+    content: "",
+    category: "Événements",
+    image: "/placeholder.svg",
+    author: {
+      name: "Kofi Mensah",
+      avatar: "/placeholder.svg",
+    },
+    date: "25 Mars 2025",
+    readTime: 6,
+    views: 980,
+  },
+  {
+    id: 3,
+    title: "Les Jeunes Leaders du Changement Démocratique en Afrique",
+    slug: "jeunes-leaders-changement-democratique",
+    excerpt: "Portrait de la nouvelle génération qui façonne l'avenir de la démocratie en Afrique à travers des initiatives innovantes et inclusives.",
+    content: "",
+    category: "Leadership",
+    image: "/placeholder.svg",
+    author: {
+      name: "Sarah Okonjo",
+      avatar: "/placeholder.svg",
+    },
+    date: "22 Mars 2025",
+    readTime: 10,
+    views: 1560,
+    featured: true,
+  },
+  {
+    id: 4,
+    title: "Technologies Civiques : Comment les Données Transforment la Gouvernance",
+    slug: "technologies-civiques-donnees-gouvernance",
+    excerpt: "Analyse de l'impact des technologies basées sur les données dans l'amélioration des services publics et de la transparence gouvernementale.",
+    content: "",
+    category: "Technologie",
+    image: "/placeholder.svg",
+    author: {
+      name: "Jean-Pierre Mukeba",
+      avatar: "/placeholder.svg",
+    },
+    date: "18 Mars 2025",
+    readTime: 7,
+    views: 1120,
+  },
+  {
+    id: 5,
+    title: "Médias Indépendants et Démocratie : Enjeux et Défis",
+    slug: "medias-independants-democratie",
+    excerpt: "Exploration du rôle crucial des médias indépendants dans le renforcement des processus démocratiques et les défis auxquels ils font face.",
+    content: "",
+    category: "Média",
+    image: "/placeholder.svg",
+    author: {
+      name: "Fatou Ndiaye",
+      avatar: "/placeholder.svg",
+    },
+    date: "15 Mars 2025",
+    readTime: 9,
+    views: 890,
+  },
+  {
+    id: 6,
+    title: "Participation Citoyenne : Nouvelles Approches pour l'Engagement Local",
+    slug: "participation-citoyenne-engagement-local",
+    excerpt: "Découverte des méthodes innovantes pour impliquer les citoyens dans les processus décisionnels au niveau local et renforcer la démocratie participative.",
+    content: "",
+    category: "Engagement",
+    image: "/placeholder.svg",
+    author: {
+      name: "Omar Hassan",
+      avatar: "/placeholder.svg",
+    },
+    date: "10 Mars 2025",
+    readTime: 5,
+    views: 760,
+  },
+  // Ajout de plus d'articles
+  {
+    id: 7,
+    title: "L'Intelligence Artificielle au Service de la Gouvernance",
+    slug: "ia-gouvernance",
+    excerpt: "Comment l'IA révolutionne les processus de prise de décision et améliore l'efficacité gouvernementale en Afrique.",
+    content: "",
+    category: "Technologie",
+    image: "/placeholder.svg",
+    author: {
+      name: "David Mensah",
+      avatar: "/placeholder.svg",
+    },
+    date: "5 Mars 2025",
+    readTime: 8,
+    views: 950,
+  },
+  {
+    id: 8,
+    title: "Renforcement des Capacités des Journalistes d'Investigation",
+    slug: "formation-journalistes-investigation",
+    excerpt: "Programme de formation innovant pour les journalistes d'investigation africains utilisant les nouvelles technologies.",
+    content: "",
+    category: "Média",
+    image: "/placeholder.svg",
+    author: {
+      name: "Aisha Mohammed",
+      avatar: "/placeholder.svg",
+    },
+    date: "1 Mars 2025",
+    readTime: 6,
+    views: 820,
+  },
+  {
+    id: 9,
+    title: "Forum sur la Démocratie Numérique",
+    slug: "forum-democratie-numerique",
+    excerpt: "Compte-rendu du premier forum panafricain sur la démocratie numérique et ses implications pour le continent.",
+    content: "",
+    category: "Événements",
+    image: "/placeholder.svg",
+    author: {
+      name: "Paul Kouassi",
+      avatar: "/placeholder.svg",
+    },
+    date: "25 Février 2025",
+    readTime: 7,
+    views: 1100,
+  }
+];
+
+const featuredArticles = articles.filter((article) => article.featured);
+const regularArticles = articles.filter((article) => !article.featured);
+
+// Pagination
+const currentPage = 1;
+const totalPages = Math.ceil(regularArticles.length / 6);
+---
+
+<Layout title="Actualités | Innov Africtivistes">
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-primary to-accent text-white py-12 md:py-16 relative overflow-hidden" transition:name="hero">
+    <div class="absolute inset-0 bg-[url('/background.svg')] bg-bottom bg-no-repeat opacity-10"></div>
+    <div class="container mx-auto px-4 md:px-6 relative" transition:animate={fade({ duration: '0.8s' })}>
+      <h1 class="text-3xl md:text-5xl font-bold mb-4">Actualités</h1>
+      <p class="text-lg md:text-xl text-white/80 max-w-3xl">
+        Restez informé des dernières nouvelles, analyses et événements liés à l'innovation, la démocratie et la gouvernance en Afrique.
+      </p>
+    </div>
+  </section>
+
+  <!-- Search and Filters -->
+  <section class="py-8 border-b -mt-6 relative z-10 bg-white rounded-t-3xl">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="flex flex-col md:flex-row justify-between gap-4">
+        <Search class="w-full md:w-96" placeholder="Rechercher un article..." />
+        <Tabs>
+          <div class="flex gap-2 overflow-x-auto pb-2 md:pb-0">
+            {categories.map(category => (
+              <button 
+                class="tab-trigger px-3 py-1 rounded-full text-xs md:text-sm hover:bg-gray-100" 
+                data-value={category}
+                data-state={category === "Tous" ? "active" : "inactive"}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </Tabs>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Articles -->
+  <section class="py-8 md:py-12">
+    <div class="container mx-auto px-4 md:px-6">
+      <h2 class="text-2xl font-bold mb-6">À la une</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        {featuredArticles.map(article => (
+          <Card class="overflow-hidden border-none shadow-md hover:shadow-lg transition-all duration-300 group">
+            <div class="relative h-56 md:h-64 w-full overflow-hidden">
+              <img 
+                src={article.image} 
+                alt={article.title}
+                class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <Badge class="absolute top-3 right-3">{article.category}</Badge>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                <span>{article.date}</span>
+              </div>
+              <h3 class="text-xl font-bold mb-2 line-clamp-2 hover:text-primary transition-colors">
+                <a href={`/actualites/${article.slug}`}>{article.title}</a>
+              </h3>
+              <p class="text-sm text-gray-600 line-clamp-2 mb-4">{article.excerpt}</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                  <img src={article.author.avatar} alt={article.author.name} class="w-6 h-6 rounded-full" />
+                  <span class="text-xs">{article.author.name}</span>
+                </div>
+                <div class="flex items-center gap-3 text-xs text-gray-500">
+                  <span>{article.readTime} min</span>
+                  <span>{article.views} vues</span>
+                </div>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Regular Articles -->
+  <section class="py-8 md:py-12 bg-gray-50">
+    <div class="container mx-auto px-4 md:px-6">
+      <h2 class="text-2xl font-bold mb-6">Derniers articles</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {regularArticles.map(article => (
+          <Card class="overflow-hidden border-none shadow-md hover:shadow-lg transition-all duration-300 group">
+            <div class="relative h-48 w-full overflow-hidden">
+              <img 
+                src={article.image} 
+                alt={article.title}
+                class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <Badge class="absolute top-3 right-3">{article.category}</Badge>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                <span>{article.date}</span>
+              </div>
+              <h3 class="text-lg font-bold mb-2 line-clamp-2 hover:text-primary transition-colors">
+                <a href={`/actualites/${article.slug}`}>{article.title}</a>
+              </h3>
+              <p class="text-sm text-gray-600 line-clamp-2 mb-4">{article.excerpt}</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                  <img src={article.author.avatar} alt={article.author.name} class="w-6 h-6 rounded-full" />
+                  <span class="text-xs">{article.author.name}</span>
+                </div>
+                <Button variant="ghost" size="sm" class="text-xs">
+                  Lire plus
+                </Button>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-8">
+        <Pagination currentPage={currentPage} totalPages={totalPages} pageSize={10} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="py-8 md:py-16 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl mx-4">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="text-center max-w-2xl mx-auto">
+        <Badge class="bg-primary/10 text-primary mb-2">Newsletter</Badge>
+        <h2 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-4">
+          Restez informé
+        </h2>
+        <p class="text-gray-600 mb-6">
+          Abonnez-vous à notre newsletter pour recevoir les dernières actualités et mises à jour directement dans votre boîte de réception.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <input 
+            type="email" 
+            placeholder="Votre adresse email" 
+            class="px-4 py-2 rounded-full flex-1 border"
+          />
+          <Button class="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 rounded-full">
+            S'abonner
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

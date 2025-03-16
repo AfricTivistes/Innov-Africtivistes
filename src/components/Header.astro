@@ -1,17 +1,12 @@
-
 ---
-// Import supprimé car non utilisé
+import Logo from './ui/logo.astro';
 ---
 
 <header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm">
   <div class="container mx-auto flex h-20 items-center justify-between px-4">
     <a href="/" class="flex items-center space-x-2">
       <div class="relative h-12 w-12">
-        <img
-          src="/logo.svg"
-          alt="Africtivistes Logo"
-          class="object-contain w-full h-full"
-        />
+        <Logo />
       </div>
       <span class="hidden font-bold text-xl sm:inline-block bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
         Innov Africtivistes

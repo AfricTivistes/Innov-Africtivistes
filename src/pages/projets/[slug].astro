@@ -1,0 +1,350 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Button from '../../components/ui/button.astro';
+import Badge from '../../components/ui/badge.astro';
+import Progress from '../../components/ui/progress.astro';
+
+// This function is required for dynamic routes in Astro
+export async function getStaticPaths() {
+  // In a real app, this would fetch from your API/database
+  const projects = [
+    {
+      id: 1,
+      title: "Civic Tech Sénégal",
+      slug: "civic-tech-senegal",
+      category: "Technologie Civique",
+      status: "En cours",
+      country: "Sénégal",
+      region: "Afrique de l'Ouest",
+      startDate: "Mars 2023",
+      endDate: "Février 2026",
+      progress: 45,
+      description: "Plateforme de participation citoyenne pour améliorer la transparence gouvernementale à Dakar et renforcer l'engagement des citoyens dans les processus décisionnels locaux.",
+      longDescription: "Civic Tech Sénégal est une initiative innovante qui vise à transformer la relation entre les citoyens et les institutions gouvernementales locales à travers l'utilisation stratégique des technologies numériques. Le projet développe et déploie une plateforme numérique accessible qui permet aux citoyens de participer activement aux processus de prise de décision, de suivre l'exécution des projets publics, et de signaler des problèmes dans leur communauté.",
+      impact: "15 communes, 50,000 citoyens",
+      objectives: [
+        "Développer une plateforme numérique accessible pour faciliter la participation citoyenne",
+        "Former 500 citoyens et 100 fonctionnaires à l'utilisation des outils numériques de gouvernance",
+        "Mettre en œuvre 15 consultations publiques numériques sur des projets municipaux",
+        "Créer un système de suivi transparent pour les projets publics dans la région de Dakar",
+        "Établir un modèle reproductible pour d'autres régions du Sénégal et d'Afrique de l'Ouest",
+      ],
+      results: [
+        "Plateforme développée et déployée dans 8 communes",
+        "320 citoyens et 65 fonctionnaires formés",
+        "7 consultations publiques réalisées avec plus de 12,000 participants",
+        "Système de suivi implémenté pour 24 projets publics",
+        "Documentation du modèle en cours pour réplication",
+      ],
+      participants: 120,
+      team: [
+        {
+          name: "Aminata Diallo",
+          role: "Coordinatrice du projet",
+          image: "/placeholder.svg",
+        },
+        {
+          name: "Moussa Seck",
+          role: "Développeur principal",
+          image: "/placeholder.svg",
+        },
+        {
+          name: "Fatou Ndiaye",
+          role: "Spécialiste en engagement citoyen",
+          image: "/placeholder.svg",
+        },
+      ],
+      resources: [
+        {
+          title: "Rapport d'étape 2024",
+          type: "PDF",
+          url: "#",
+        },
+        {
+          title: "Guide d'utilisation de la plateforme",
+          type: "PDF",
+          url: "#",
+        },
+        {
+          title: "Présentation du projet",
+          type: "Présentation",
+          url: "#",
+        },
+      ],
+      gallery: [
+        "/placeholder.svg",
+        "/placeholder.svg",
+        "/placeholder.svg",
+        "/placeholder.svg",
+      ],
+      website: "https://example.com",
+      contact: "contact@civictechsenegal.org",
+    }
+  ];
+
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={project.title}>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-primary to-accent text-white py-12 md:py-16 relative overflow-hidden" transition:name="hero">
+    <div class="absolute inset-0 bg-[url('/background.svg')] bg-bottom bg-no-repeat opacity-10"></div>
+    <div class="container px-4 md:px-6 relative">
+      <a href="/projets" class="inline-flex items-center text-white/80 hover:text-white mb-4 transition-colors">
+        <span class="mr-2">←</span>
+        Retour aux projets
+      </a>
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <Badge>{project.category}</Badge>
+            <Badge variant={project.status === "En cours" ? "default" : "secondary"}>{project.status}</Badge>
+          </div>
+          <h1 class="text-3xl md:text-5xl font-bold mb-2">{project.title}</h1>
+          <p class="text-white/80 max-w-3xl">{project.description}</p>
+        </div>
+
+        <div class="flex gap-2 mt-4 md:mt-0">
+          <Button variant="outline" size="sm" class="rounded-full bg-white/10 border-none text-white hover:bg-white/20">
+            ♥
+          </Button>
+          <Button variant="outline" size="sm" class="rounded-full bg-white/10 border-none text-white hover:bg-white/20">
+            ↗
+          </Button>
+          <Button variant="outline" size="sm" class="rounded-full bg-white/10 border-none text-white hover:bg-white/20">
+            💬
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Information -->
+  <section class="py-8 border-b -mt-6 relative z-10 bg-white rounded-t-3xl">
+    <div class="container px-4 md:px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <div class="flex items-center gap-2 text-sm text-gray-600 mb-1">
+            🌍 Région
+          </div>
+          <div class="font-medium">
+            {project.country}, {project.region}
+          </div>
+        </div>
+
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <div class="flex items-center gap-2 text-sm text-gray-600 mb-1">
+            📅 Période
+          </div>
+          <div class="font-medium">
+            {project.startDate} - {project.endDate}
+          </div>
+        </div>
+
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <div class="flex items-center gap-2 text-sm text-gray-600 mb-1">
+            👥 Participants
+          </div>
+          <div class="font-medium">{project.participants} personnes</div>
+        </div>
+
+        <div class="bg-gray-100 p-4 rounded-lg">
+          <div class="flex items-center gap-2 text-sm text-gray-600 mb-1">
+            🎯 Impact
+          </div>
+          <div class="font-medium">{project.impact}</div>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <div class="flex justify-between items-center mb-2">
+          <div class="text-sm font-medium">Progression du projet</div>
+          <div class="text-sm font-medium">{project.progress}%</div>
+        </div>
+        <Progress value={project.progress} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <section class="py-8 md:py-12">
+    <div class="container px-4 md:px-6">
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Main Column -->
+        <div class="md:col-span-2 space-y-8">
+          <div class="tabs">
+            <div class="tab-list grid grid-cols-4 gap-2 mb-6">
+              <button class="tab-trigger active" data-tab="description">Description</button>
+              <button class="tab-trigger" data-tab="objectives">Objectifs</button>
+              <button class="tab-trigger" data-tab="results">Résultats</button>
+              <button class="tab-trigger" data-tab="gallery">Galerie</button>
+            </div>
+
+            <div class="tab-content active" id="description">
+              <div class="prose max-w-none">
+                <p class="text-gray-600">{project.longDescription}</p>
+              </div>
+            </div>
+
+            <div class="tab-content hidden" id="objectives">
+              <h3 class="text-xl font-bold mb-4">Objectifs du projet</h3>
+              <ul class="space-y-3">
+                {project.objectives.map((objective) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-primary">🎯</span>
+                    <span>{objective}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="tab-content hidden" id="results">
+              <h3 class="text-xl font-bold mb-4">Résultats atteints</h3>
+              <ul class="space-y-3">
+                {project.results.map((result) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-success">✓</span>
+                    <span>{result}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="tab-content hidden" id="gallery">
+              <h3 class="text-xl font-bold mb-4">Galerie du projet</h3>
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {project.gallery.map((image) => (
+                  <div class="relative aspect-video rounded-lg overflow-hidden">
+                    <img src={image} alt="Image du projet" class="object-cover w-full h-full hover:scale-105 transition-transform duration-300" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Section -->
+          <div class="space-y-4 pt-4 border-t">
+            <h3 class="text-xl font-bold">Équipe du projet</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {project.team.map((member) => (
+                <div class="flex flex-col items-center text-center p-4 bg-gray-100 rounded-lg">
+                  <div class="relative h-20 w-20 rounded-full overflow-hidden mb-3">
+                    <img src={member.image} alt={member.name} class="object-cover w-full h-full" />
+                  </div>
+                  <h4 class="font-medium">{member.name}</h4>
+                  <p class="text-sm text-gray-600">{member.role}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="space-y-6">
+          <!-- Actions -->
+          <div class="bg-gray-100 p-6 rounded-xl">
+            <h3 class="text-lg font-bold mb-4">Actions</h3>
+            <div class="space-y-3">
+              {project.website && (
+                <Button class="w-full rounded-full bg-gradient-to-r from-primary to-accent">
+                  <a href={project.website} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2">
+                    Visiter le site web ↗
+                  </a>
+                </Button>
+              )}
+              <Button variant="outline" class="w-full rounded-full">
+                Contacter l'équipe
+              </Button>
+              <Button variant="outline" class="w-full rounded-full">
+                Soutenir ce projet
+              </Button>
+            </div>
+          </div>
+
+          <!-- Resources -->
+          <div class="bg-gray-100 p-6 rounded-xl">
+            <h3 class="text-lg font-bold mb-4">Ressources</h3>
+            <div class="space-y-3">
+              {project.resources.map((resource) => (
+                <div class="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm">
+                  <div class="flex items-center gap-2">
+                    <div class="bg-primary/10 p-2 rounded-full">
+                      ⬇
+                    </div>
+                    <div>
+                      <div class="font-medium text-sm">{resource.title}</div>
+                      <div class="text-xs text-gray-600">{resource.type}</div>
+                    </div>
+                  </div>
+                  <a href={resource.url} class="text-primary hover:underline text-sm">
+                    Télécharger
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Tabs functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabTriggers = document.querySelectorAll('.tab-trigger');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const tab = trigger.getAttribute('data-tab');
+
+        // Update active state of triggers
+        tabTriggers.forEach(t => t.classList.remove('active'));
+        trigger.classList.add('active');
+
+        // Show/hide content
+        tabContents.forEach(content => {
+          if (content.id === tab) {
+            content.classList.remove('hidden');
+            content.classList.add('active');
+          } else {
+            content.classList.add('hidden');
+            content.classList.remove('active');
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .tab-trigger {
+    @apply px-4 py-2 rounded-full text-sm font-medium transition-colors;
+    @apply bg-gray-100 text-gray-600 hover:bg-gray-200;
+  }
+
+  .tab-trigger.active {
+    @apply bg-primary text-white;
+  }
+
+  .tab-content {
+    @apply transition-opacity duration-200;
+  }
+
+  .tab-content.hidden {
+    @apply opacity-0;
+  }
+
+  .tab-content.active {
+    @apply opacity-100;
+  }
+</style>

@@ -1,62 +1,14 @@
+
 ---
-export interface Props {
-  class?: string;
+interface Props {
+  defaultValue?: string;
   value?: string;
+  class?: string;
 }
 
 const { class: className } = Astro.props;
 ---
 
-<div class={`data-[state=active]:bg-background data-[state=active]:shadow-sm ${className || ''}`}>
+<div class={className}>
   <slot />
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const tabContainer = document.currentScript?.parentElement;
-    if (!tabContainer) return;
-
-    const initialValue = tabContainer.getAttribute('data-initial-value');
-    const triggers = tabContainer.querySelectorAll('.tab-trigger');
-    const contents = tabContainer.querySelectorAll('.tab-content');
-
-    // Définir l'état initial si une valeur initiale est fournie
-    if (initialValue) {
-      triggers.forEach(trigger => {
-        const value = trigger.getAttribute('data-value');
-        trigger.setAttribute('data-state', value === initialValue ? 'active' : 'inactive');
-      });
-
-      contents.forEach(content => {
-        const value = content.getAttribute('data-value');
-        if (value === initialValue) {
-          content.classList.remove('hidden');
-        } else {
-          content.classList.add('hidden');
-        }
-      });
-    }
-
-    // Ajouter des écouteurs d'événements
-    triggers.forEach(trigger => {
-      trigger.addEventListener('click', () => {
-        const value = trigger.getAttribute('data-value');
-
-        // Mettre à jour l'état des déclencheurs
-        triggers.forEach(t => {
-          t.setAttribute('data-state', t === trigger ? 'active' : 'inactive');
-        });
-
-        // Afficher/masquer le contenu
-        contents.forEach(content => {
-          const contentValue = content.getAttribute('data-value');
-          if (contentValue === value) {
-            content.classList.remove('hidden');
-          } else {
-            content.classList.add('hidden');
-          }
-        });
-      });
-    });
-  });
-</script>
